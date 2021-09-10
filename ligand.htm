@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<!--
+	PROTEIN THERMODYNAMICS SIMULATIONS: Ligand binding simulation
+	Copyright (C) 2021 Johan Pääkkönen, Juha Rouvinen, University of Eastern Finland
+	
+	This program is free software; you can redistribute it and/or
+	modify it under the terms of the GNU General Public License
+	as published by the Free Software Foundation; either version 2
+	of the License, or (at your option) any later version.
+	
+	This program is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	GNU General Public License for more details.
+	
+	You should have received a copy of the GNU General Public License
+	along with this program; if not, write to the Free Software
+	Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+-->
+<!--
+	The GNU General Public Licence, version 2, is available at:
+	(1) the file LICENSE in this folder
+	(2) https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+-->
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<title>Ligand binding simulation</title>
+		<link rel="stylesheet" type="text/css" href="style.css" />
+		<script src="simulation.js"></script>
+		<script src="calculations.js"></script>
+		<script src="update.js"></script>
+		<noscript>
+			<link rel="stylesheet" type="text/css" href="noscript.css" />
+		</noscript>
+	</head>
+	<body onload="init();">
+		<p id="nojavascript">JavaScript must be enabled in your browser for the page to function.</p>
+		<h1>Ligand binding simulation</h1>
+		<table class="reactiontable">
+			<tr><td></td><td class="center overreactionarrow"><var>K</var><sub>D</sub></td><td></td></tr>
+			<tr><td>PL</td><td class="center">&#x2002;&#x21CC;&#x2002;</td><td>P&#x2002;+&#x2002;L</td></tr>
+		</table>
+		<table id="slidertable">
+			<tr>
+				<td title="Protein concentration"><var>c</var><sub>P</sub></td>
+				<td class="valuecol">=&nbsp;<span id="value5"></span></td>
+				<td><input id="slider5" class="slider" type="range" value="150" min="0" max="240" oninput="slider_input(5);" /></td>
+				<td title="Protein molar mass"><var>M</var><sub>P</sub></td>
+				<td class="valuecol2" colspan="3">=&nbsp;<input type="number" min="1000" step="1000" value="20000" style="width:5.5em" id="mass1" oninput="update();" />&nbsp;g&nbsp;mol<sup>&minus;1</sup></td>
+			</tr>
+			<tr>
+				<td title="Total ligand concentration" id="title3"><span id="label3_free" style="display:none">[L]</span><span id="label3_init"><var>c</var><sub>L</sub></span></td>
+				<td class="valuecol">=&nbsp;<span id="value3"></span></td>
+				<td><input id="slider3" class="slider" type="range" value="120" min="0" max="240" oninput="slider_input(3);" /></td>
+				<td title="Ligand molar mass"><var>M</var><sub>L</sub></td>
+				<td class="valuecol2" colspan="3">=&nbsp;<input type="number" min="10" step="10" value="200" style="width:5.5em" id="mass2" oninput="update();" />&nbsp;g&nbsp;mol<sup>&minus;1</sup></td>
+			</tr>
+			<tr>
+				<td title="Complex dissociation constant"><var>K</var><sub>D</sub></td>
+				<td class="valuecol">=&nbsp;<span id="value7"></span></td>
+				<td><input id="slider7" class="slider" type="range" value="90" min="0" max="240" oninput="slider_input(7);" /></td>
+				<td class="grey" title="Complex association constant"><var>K</var><sub>A</sub></td>
+				<td class="valuecol2 grey">=&nbsp;<span id="value16"></span>,</td>
+				<td class="grey" title="Gibbs free energy of dissociation (T = 25 &deg;C)">&Delta;<sub>D</sub><var>G</var></td>
+				<td class="valuecol2 grey">=&nbsp;<span id="value8"></span></td>
+			</tr>
+		</table>
+		<table>
+			<tr>
+				<td>Vertical scale:</td>
+				<td>
+					<label><input id="radio1" name="yaxis" class="radio" type="radio" onchange="radio_input(1);" checked />&nbsp;Absolute</label><br />
+					<label><input id="radio2" name="yaxis" class="radio" type="radio" onchange="radio_input(2);" />&nbsp;Relative</label>
+				</td>
+			</tr>
+			<tr>
+				<td>Horizontal axis:</td>
+				<td>
+					<label><input id="radio3" name="xaxis" class="radio" type="radio" onchange="radio_input(3);" checked />&nbsp;Total ligand concentration</label><br />
+					<label><input id="radio4" name="xaxis" class="radio" type="radio" onchange="radio_input(4);" />&nbsp;Free ligand concentration</label>
+				</td>
+			</tr>
+		</table>
+		<div id="figure_div"></div>
+		<table id="datatable"></table>
+		<input type="button" value="Export graphic (SVG)" id="export_button" />
+		<hr>
+		<h2><a href="javascript:toggle_calcdiv();"><span id="toggle_calcdiv_symbol">&#x25BC;</span> Curve fitting</a></h2>
+		<div id="calcdiv" style="display:none;">
+			<input type="checkbox" id="toggle_calcdiv_checkbox" style="display:none" />
+			<p id="calcinfo"></p>
+			<table id="calctable">
+				<tr>
+					<td><textarea id="databox" cols="24" rows="16"></textarea></td>
+					<td>
+						<table>
+							<tr>
+								<td colspan="2">Calculation method:<br />
+									<label><input type="radio" name="calcmode" id="calcmode1" checked />&nbsp;Two-pass search (fast)</label><br />
+									<label><input type="radio" name="calcmode" id="calcmode2"         />&nbsp;Single-pass search (slow)</label><br />
+									<label><input type="radio" name="calcmode" id="calcmode3"         />&nbsp;Iterative search (converges from the given values)</label>
+								</td>
+							</tr>
+							<tr>
+								<td>Curve to fit:<br />
+									<label><input type="radio" name="calcoption" id="calcoption0" checked />&nbsp;[PL]</label><br />
+									<label><input type="radio" name="calcoption" id="calcoption1"         />&nbsp;[P]</label>
+								</td>
+								<td>
+									Free parameters:<br />
+									<label><input id="fixval5" class="fixval" type="checkbox" /><span>&nbsp;<var>c</var><sub>P</sub></span></label><br />
+									<label><input id="fixval7" class="fixval" type="checkbox" /><span>&nbsp;<var>K</var><sub>D</sub></span></label><br />
+								</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+			</table>
+			<input type="button" value="Calculate" id="calcbutton" />
+			<span id="calcstatus" style="margin-left:1em;color:green">Waiting for input.</span>
+		</div>
+		<hr>
+		<h2>Other pages</h2>
+		<div id="linkarea"></div>
+		<div id="credits"></div>
+		<script>preinit(appmode_ligand);</script>
+	</body>
+</html>

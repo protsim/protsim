@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<!--
+	PROTEIN THERMODYNAMICS SIMULATIONS: Protein homodimerisation simulation
+	Copyright (C) 2021 Johan Pääkkönen, Juha Rouvinen, University of Eastern Finland
+	
+	This program is free software; you can redistribute it and/or
+	modify it under the terms of the GNU General Public License
+	as published by the Free Software Foundation; either version 2
+	of the License, or (at your option) any later version.
+	
+	This program is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	GNU General Public License for more details.
+	
+	You should have received a copy of the GNU General Public License
+	along with this program; if not, write to the Free Software
+	Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+-->
+<!--
+	The GNU General Public Licence, version 2, is available at:
+	(1) the file LICENSE in this folder
+	(2) https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+-->
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<title>Protein homodimerisation simulation</title>
+		<link rel="stylesheet" type="text/css" href="style.css" />
+		<script src="simulation.js"></script>
+		<script src="calculations.js"></script>
+		<script src="update.js"></script>
+		<noscript>
+			<link rel="stylesheet" type="text/css" href="noscript.css" />
+		</noscript>
+	</head>
+	<body onload="init();">
+		<p id="nojavascript">JavaScript must be enabled in your browser for the page to function.</p>
+		<h1>Protein homodimerisation simulation</h1>
+		<table class="reactiontable">
+			<tr><td></td><td class="center overreactionarrow"><var>K</var><sub>D</sub></td><td></td></tr>
+			<tr><td>P<sub>2</sub></td><td class="center">&#x2002;&#x21CC;&#x2002;</td><td>P&#x2002;+&#x2002;P</td></tr>
+		</table>
+		<table id="slidertable">
+			<tr>
+				<td title="Total protein concentration" id="title5"><span id="label5_free" style="display:none">[P]</span><span id="label5_init"><var>c</var><sub>P</sub></span></td>
+				<td class="valuecol">=&nbsp;<span id="value5"></span></td>
+				<td><input id="slider5" class="slider" type="range" value="120" min="0" max="240" oninput="slider_input(5);" /></td>
+				<td title="Protein molar mass"><var>M</var><sub>P</sub></td>
+				<td class="valuecol2" colspan="3">=&nbsp;<input type="number" min="1000" step="1000" value="20000" style="width:5.5em" id="mass1" oninput="update();" />&nbsp;g&nbsp;mol<sup>&minus;1</sup></td>
+			</tr>
+			<tr>
+				<td title="Protein dimer dissociation constant"><var>K</var><sub>D</sub></td>
+				<td class="valuecol">=&nbsp;<span id="value7"></span></td>
+				<td><input id="slider7" class="slider" type="range" value="90" min="0" max="240" oninput="slider_input(7);" /></td>
+				<td class="grey" title="Protein dimer association constant"><var>K</var><sub>A</sub></td>
+				<td class="valuecol2 grey">=&nbsp;<span id="value16"></span>,</td>
+				<td class="grey" title="Gibbs free energy of dissociation (T = 25 &deg;C)">&Delta;<sub>D</sub><var>G</var></td>
+				<td class="valuecol2 grey">=&nbsp;<span id="value8"></span></td>
+			</tr>
+		</table>
+		<table>
+			<tr>
+				<td>Vertical scale:</td>
+				<td>
+					<label><input id="radio1" name="yaxis" class="radio" type="radio" onchange="radio_input(1);" checked />&nbsp;Absolute</label><br />
+					<label><input id="radio2" name="yaxis" class="radio" type="radio" onchange="radio_input(2);" />&nbsp;Relative</label>
+				</td>
+			</tr>
+			<tr>
+				<td>Horizontal axis:</td>
+				<td>
+					<label><input id="radio3" name="xaxis" class="radio" type="radio" onchange="radio_input(3);" checked />&nbsp;Total protein concentration</label><br />
+					<label><input id="radio4" name="xaxis" class="radio" type="radio" onchange="radio_input(4);" />&nbsp;Free protein concentration</label>
+				</td>
+			</tr>
+		</table>
+		<div id="figure_div"></div>
+		<table id="datatable"></table>
+		<input type="button" value="Export graphic (SVG)" id="export_button" />
+		<hr>
+		<h2><a href="javascript:toggle_calcdiv();"><span id="toggle_calcdiv_symbol">&#x25BC;</span> Curve fitting</a></h2>
+		<div id="calcdiv" style="display:none;">
+			<input type="checkbox" id="toggle_calcdiv_checkbox" style="display:none" />
+			<p id="calcinfo"></p>
+			<table id="calctable">
+				<tr>
+					<td><textarea id="databox" cols="24" rows="16"></textarea></td>
+					<td>
+						<table>
+							<tr>
+								<td colspan="2">Calculation method:<br />
+									<label><input type="radio" name="calcmode" id="calcmode1" checked />&nbsp;Two-pass search (fast)</label><br />
+									<label><input type="radio" name="calcmode" id="calcmode2"         />&nbsp;Single-pass search (slow)</label><br />
+									<label><input type="radio" name="calcmode" id="calcmode3"         />&nbsp;Iterative search (converges from the given values)</label>
+								</td>
+							</tr>
+							<tr>
+								<td>Curve to fit:<br />
+									<label><input type="radio" name="calcoption" id="calcoption0" checked />&nbsp;[P<sub>2</sub>]</label><br />
+									<label><input type="radio" name="calcoption" id="calcoption1"         />&nbsp;[P]</label>
+								</td>
+								<td><input id="fixval7" class="fixval" type="checkbox" style="display:none" checked /></td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+			</table>
+			<input type="button" value="Calculate" id="calcbutton"
+			/><span id="calcstatus" style="margin-left:1em;color:green">Waiting for input.</span>
+		</div>
+		<hr>
+		<h2>Other pages</h2>
+		<div id="linkarea"></div>
+		<div id="credits"></div>
+		<script>preinit(appmode_homodimer);</script>
+	</body>
+</html>
