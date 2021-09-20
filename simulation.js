@@ -84,10 +84,14 @@ function preinit(mode)
 	var first = true;
 	var i;
 	
-	credits.innerHTML = "Johan P&auml;&auml;kk&ouml;nen, Juha Rouvinen<br />University of Eastern Finland, 2021";
+	credits.innerHTML = "Johan P&auml;&auml;kk&ouml;nen, Juha Rouvinen<br />University of Eastern Finland, 2021" +
+		"<br /><br />GitHub repository: <a href=\"https://github.com/protsim/protsim\">https://github.com/protsim/protsim</a>";
 	
-//	credits.innerHTML = "Johan P&auml;&auml;kk&ouml;nen, Juha Rouvinen<br />University of Eastern Finland, 2021" +
-//		"<br/><br />If you use this in your own research, please cite our article: <a href=\"\">https://doi.org/XXX.XXX/XXX</a>";
+	/*
+	credits.innerHTML = "Johan P&auml;&auml;kk&ouml;nen, Juha Rouvinen<br />University of Eastern Finland, 2021" +
+		"<br /><br />GitHub repository: <a href=\"https://github.com/protsim/protsim\">https://github.com/protsim/protsim</a>" +
+		"<br />If you use this in your own research, please cite our article: <a href=\"\">https://doi.org/XXX.XXX/XXX</a>";
+	*/
 	
 	for(i = 0; i < pages.length; i++)
 	{
