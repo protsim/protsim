@@ -18,7 +18,7 @@
 	Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 -->
 <!--
-	The GNU General Public Licence, version 2, is available at:
+	The GNU General Public License, version 2, is available at:
 	(1) the file LICENSE in this folder
 	(2) https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 -->
@@ -102,14 +102,47 @@
 				</td>
 			</tr>
 		</table>
-		<div id="figure_div"></div>
-		<table id="datatable"></table>
+		<div id="figure_div">
+			<svg xmlns="http://www.w3.org/2000/svg" id="figure_svg" width="96%" height="100%" viewBox="0 0 600 450" preserveAspectRatio="none" style="font-family: Arial, Helvetica, sans-serif; font-size: 12px">
+				<rect x="0" y="0" width="100%" height="100%" style="fill: white; stroke: none;" />
+				<g id="svg_curvegroup" style="fill: none; stroke-width: 3px; stroke-linejoin: round; stroke-linecap: butt;"></g>
+				<g id="svg_datapointgroup"></g>
+				<g id="svg_overlaygroup"></g>
+				<g id="svg_linegroup" style="fill: none; stroke: black; stroke-width: 3px;"></g>
+				<g id="svg_legendgroup"></g>
+				<g id="svg_piegroup"></g>
+				<g id="svg_scribblegroup"></g>
+			</svg>
+		</div>
+		<table id="datatable">
+			<tr>
+				<th>Species</th>
+				<th>Conc. (mol l<sup>&minus;1</sup>)</th>
+				<th>Conc. (g l<sup>&minus;1</sup>)</th>
+				<th>Proportion (%)</th>
+			</tr>
+			<tr>
+				<td id="data0l">PL</td>
+				<td id="data0a">0</td><td id="data0b">0</td><td id="data0c">0</td>
+			</tr>
+			<tr>
+				<td id="data1l">PL&prime;</td>
+				<td id="data1a">0</td><td id="data1b">0</td><td id="data1c">0</td>
+			</tr>
+			<tr>
+				<td id="data2l">P</td>
+				<td id="data2a">0</td><td id="data2b">0</td><td id="data2c">0</td>
+			</tr>
+		</table>
 		<input type="button" value="Export graphic (SVG)" id="export_button" />
 		<hr />
 		<h2><a href="javascript:toggle_calcdiv();"><span id="toggle_calcdiv_symbol">&#x25BC;</span> Curve fitting</a></h2>
 		<div id="calcdiv" style="display:none;">
 			<input type="checkbox" id="toggle_calcdiv_checkbox" style="display:none" />
-			<p id="calcinfo"></p>
+			<p id="calcinfo">Give a list of pairs of values: <strong><var>x</var>-value&nbsp;<var>y</var>-value</strong>. The curve of your choice will be least-squares fitted<br />
+				to the data by finding the optimal slider position of the dissociation constant.<br />
+				The number of data points must be greater than or equal to the number of free parameters.<br />
+				Note that this is not a proper analytical tool. Results are imprecise and possibly inaccurate.</p>
 			<table id="calctable">
 				<tr>
 					<td><textarea id="databox" cols="24" rows="16"></textarea></td>
@@ -146,8 +179,21 @@
 		</div>
 		<hr />
 		<h2>Other pages</h2>
-		<div id="linkarea"></div>
-		<div id="credits"></div>
+		<div id="linkarea">
+			<!-- <a href="ligands.htm">Competing ligands simulation</a>
+			<br /><br /> -->
+			<a href="receptors.htm">Competing receptors simulation</a>
+			<br /><br />
+			<a href="ligand.htm">Ligand binding simulation</a>
+			<br /><br />
+			<a href="homodimer.htm">Protein homodimerisation simulation</a>
+		</div>
+		<div id="credits">
+			Johan P&auml;&auml;kk&ouml;nen, Juha Rouvinen<br />
+			University of Eastern Finland, 2021<br /><br />
+			GitHub repository: <a href="https://github.com/protsim/protsim">github.com/protsim/protsim</a><!-- <br />
+			If you use this in your own research, please cite our article: <a href="">doi.org/XXX.XXX/XXX</a> -->
+		</div>
 		<script>preinit(appmode_ligands);</script>
 	</body>
 </html>

@@ -18,7 +18,7 @@
 */
 
 /*
-	The GNU General Public Licence, version 2, is available at:
+	The GNU General Public License, version 2, is available at:
 	(1) the file LICENSE in this folder
 	(2) https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 */
@@ -84,81 +84,7 @@ function preinit(mode)
 	var first = true;
 	var i;
 	
-	credits.innerHTML = "Johan P&auml;&auml;kk&ouml;nen, Juha Rouvinen<br />University of Eastern Finland, 2021" +
-		"<br /><br />GitHub repository: <a href=\"https://github.com/protsim/protsim\">https://github.com/protsim/protsim</a>";
-	
-	/*
-	credits.innerHTML = "Johan P&auml;&auml;kk&ouml;nen, Juha Rouvinen<br />University of Eastern Finland, 2021" +
-		"<br /><br />GitHub repository: <a href=\"https://github.com/protsim/protsim\">https://github.com/protsim/protsim</a>" +
-		"<br />If you use this in your own research, please cite our article: <a href=\"\">https://doi.org/XXX.XXX/XXX</a>";
-	*/
-	
-	for(i = 0; i < pages.length; i++)
-	{
-		if(appmode === i || pages[i] === undefined) continue;
-		
-		if(!first)
-		{
-			brnode = document.createElement("br");
-			linkarea.appendChild(brnode);
-			brnode = document.createElement("br");
-			linkarea.appendChild(brnode);
-		}
-		
-		first = false;
-		
-		textnode = document.createTextNode(pages[i].title);
-		anode = document.createElement("a");
-		anode.appendChild(textnode);
-		anode.href = pages[i].link;
-		linkarea.appendChild(anode);
-	}
-	
 	if(!(appmode >= 0)) return;
-	
-	var datatable = document.getElementById("datatable");
-	
-	for(i = -1; i < datalabels[appmode].length; i++)
-	{
-		var ele = document.createElement("tr");
-		var td1 = document.createElement(i === -1 ? "th" : "td");
-		var td2 = document.createElement(i === -1 ? "th" : "td");
-		var td3 = document.createElement(i === -1 ? "th" : "td");
-		var td4 = document.createElement(i === -1 ? "th" : "td");
-		
-		if(i === -1)
-		{
-			td1.innerHTML = "Species";
-			td2.innerHTML = "Conc. (mol l<sup>&minus;1</sup>)";
-			td3.innerHTML = "Conc. (g l<sup>&minus;1</sup>)";
-			td4.innerHTML = "Proportion (%)";
-		}
-		else
-		{
-			td1.innerHTML = datalabels[appmode][i].substring(1, datalabels[appmode][i].length - 1);
-			td2.innerHTML = "0";
-			td3.innerHTML = "0";
-			td4.innerHTML = "0";
-			td1.setAttribute("id", "data" + i + "l");
-			td2.setAttribute("id", "data" + i + "a");
-			td3.setAttribute("id", "data" + i + "b");
-			td4.setAttribute("id", "data" + i + "c");
-		}
-		
-		ele.appendChild(td1);
-		ele.appendChild(td2);
-		ele.appendChild(td3);
-		ele.appendChild(td4);
-		datatable.appendChild(ele);
-	}
-	
-	var calcinfo = document.getElementById("calcinfo");
-	
-	calcinfo.innerHTML =
-		"Give a list of pairs of values: <strong>x-value\xA0y-value</strong>. The curve of your choice will be least-squares fitted<br />" +
-		"to the data by finding the optimal slider position of the dissociation constant.<br />" +
-		"The number of data points must be greater than or equal to the number of free parameters.<br />" +
-		"Note that this is not a proper analytical tool. Results are imprecise and possibly inaccurate.";
 	
 	var figure_div = document.getElementById("figure_div");
 	
@@ -173,18 +99,6 @@ function preinit(mode)
 	figure_div.style.height = "300px";
 	figure_div.style.minHeight = "300px";
 	*/
-	
-	figure_div.innerHTML = 	
-		"<svg xmlns=\"http://www.w3.org/2000/svg\" id=\"figure_svg\" width=\"96%\" height=\"100%\" viewBox=\"0 0 600 450\" preserveAspectRatio=\"none\" style=\"font-family: Arial, Helvetica, sans-serif; font-size: 12px\">\n" +
-			"<rect x=\"0\" y=\"0\" width=\"100%\" height=\"100%\" style=\"fill: white; stroke: none;\" />\n" +
-			"<g id=\"svg_curvegroup\" style=\"fill: none; stroke-width: 3px; stroke-linejoin: round; stroke-linecap: butt;\"></g>\n" +
-			"<g id=\"svg_datapointgroup\"></g>\n" +
-			"<g id=\"svg_overlaygroup\"></g>\n" +
-			"<g id=\"svg_linegroup\" style=\"fill: none; stroke: black; stroke-width: 3px;\"></g>\n" +
-			"<g id=\"svg_legendgroup\"></g>\n" +
-			"<g id=\"svg_piegroup\"></g>\n" +
-			"<g id=\"svg_scribblegroup\"></g>\n" +
-		"</svg>";
 	
 	var toggle_calcdiv_checkbox = document.getElementById("toggle_calcdiv_checkbox")
 	if(toggle_calcdiv_checkbox)
@@ -447,60 +361,58 @@ function slider_input(index, noupdate)
 		case 3: // [S]_0
 		{
 			val = S_0 = expval_wrap(rawval, index);
-			unitstr = "mol\xA0l\uEEE1\u22121\uEEE0";
+			unitstr = "mol\xA0l<sup>\u22121</sup>";
 			break;
 		}
 		case 5: // [E]
 		{
 			val = E_0 = expval_wrap(rawval, index);
-			unitstr = "mol\xA0l\uEEE1\u22121\uEEE0";
+			unitstr = "mol\xA0l<sup>\u22121</sup>";
 			break;
 		}
 		case 7: // K_D
 		{
 			val = K_D = expval_wrap(rawval, index);
-			unitstr = "mol\xA0l\uEEE1\u22121\uEEE0";
+			unitstr = "mol\xA0l<sup>\u22121</sup>";
 			break;
 		}
 		case 8: // delta_G
 		{
 			val = -8.31446261815324 * 298.15 * Math.log(K_D) * 1e-3;
-			unitstr = "kJ\xA0mol\uEEE1\u22121\uEEE0";
+			unitstr = "kJ\xA0mol<sup>\u22121</sup>";
 			break;
 		}
 		case 9: // K_D 2
 		{
 			val = K_D2 = expval_wrap(rawval, index);
-			unitstr = "mol\xA0l\uEEE1\u22121\uEEE0";
+			unitstr = "mol\xA0l<sup>\u22121</sup>";
 			break;
 		}
 		case 10: // [E]
 		{
 			val = Q_0 = expval_wrap(rawval, index);
-			unitstr = "mol\xA0l\uEEE1\u22121\uEEE0";
+			unitstr = "mol\xA0l<sup>\u22121</sup>";
 			break;
 		}
 		case 16: // K_A (association constant)
 		{
 			val = 1.0 / K_D;
-			unitstr = "l\xA0mol\uEEE1\u22121\uEEE0";
+			unitstr = "l\xA0mol<sup>\u22121</sup>";
 			break;
 		}
 		case 17: // delta_G 2
 		{
 			val = -8.31446261815324 * 298.15 * Math.log(K_D2) * 1e-3;
-			unitstr = "kJ\xA0mol\uEEE1\u22121\uEEE0";
+			unitstr = "kJ\xA0mol<sup>\u22121</sup>";
 			break;
 		}
 		case 18: // K_A 2 (association constant)
 		{
 			val = 1.0 / K_D2;
-			unitstr = "l\xA0mol\uEEE1\u22121\uEEE0";
+			unitstr = "l\xA0mol<sup>\u22121</sup>";
 			break;
 		}
 	}
-	
-	var labelstr = "";
 	
 	var abs = Math.abs(val);
 	var magnitude = Math.floor(Math.log10(abs));
@@ -512,45 +424,10 @@ function slider_input(index, noupdate)
 	}
 	else
 	{
-		valstr = sign + (abs / Math.pow(10, magnitude)).toFixed(2) + "\xA0\u22C5\xA0" + "10\uEEE1" + magnitude + "\uEEE0";
+		valstr = sign + (abs / Math.pow(10, magnitude)).toFixed(2) + "\xA0\u22C5\xA0" + "10<sup>" + magnitude + "</sup>";
 	}
-		
-	labelstr = replace_minus_signs(valstr) + "\xA0" + unitstr;
 	
-	while(label.hasChildNodes()) label.removeChild(label.firstChild); 
-	
-	var nextchar = 0;
-	var prevchar = -1;
-	var search = 0;
-	var elementnode = null;
-	var textnode = null;
-	
-	do
-	{
-		search = labelstr.substr(prevchar + 1).search(/[\uEEE0\uEEE1\uEEE2]/);
-		nextchar = prevchar + 1 + search;
-		textnode = document.createTextNode(labelstr.substring(prevchar + 1, (search === -1) ? undefined : nextchar));
-		
-		if(prevchar === -1 || labelstr.charCodeAt(prevchar) === 0xEEE0)
-		{
-			label.appendChild(textnode);
-		}
-		else if(labelstr.charCodeAt(prevchar) === 0xEEE1)
-		{
-			elementnode = document.createElement("sup");
-			elementnode.appendChild(textnode);
-			label.appendChild(elementnode);
-		}
-		else if(labelstr.charCodeAt(prevchar) === 0xEEE2)
-		{
-			elementnode = document.createElement("sub");
-			elementnode.appendChild(textnode);
-			label.appendChild(elementnode);
-		}
-		
-		prevchar = nextchar;
-	}
-	while(search !== -1);
+	label.innerHTML = replace_minus_signs(valstr) + "\xA0" + unitstr;
 	
 	if(index === 7)
 	{

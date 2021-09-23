@@ -18,7 +18,7 @@
 */
 
 /*
-	The GNU General Public Licence, version 2, is available at:
+	The GNU General Public License, version 2, is available at:
 	(1) the file LICENSE in this folder
 	(2) https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 */
