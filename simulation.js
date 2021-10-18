@@ -378,7 +378,7 @@ function slider_input(index, noupdate)
 		}
 		case 8: // delta_G
 		{
-			val = -8.31446261815324 * 298.15 * Math.log(K_D) * 1e-3;
+			val = 8.31446261815324 * 298.15 * Math.log(K_D) * 1e-3;
 			unitstr = "kJ\xA0mol<sup>\u22121</sup>";
 			break;
 		}
@@ -402,7 +402,7 @@ function slider_input(index, noupdate)
 		}
 		case 17: // delta_G 2
 		{
-			val = -8.31446261815324 * 298.15 * Math.log(K_D2) * 1e-3;
+			val = 8.31446261815324 * 298.15 * Math.log(K_D2) * 1e-3;
 			unitstr = "kJ\xA0mol<sup>\u22121</sup>";
 			break;
 		}

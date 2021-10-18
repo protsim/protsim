@@ -38,12 +38,8 @@
 		<p id="nojavascript">JavaScript must be enabled in your browser for the page to function.</p>
 		<h1>Competing receptors simulation</h1>
 		<table class="reactiontable">
-			<tr><td></td><td class="center overreactionarrow"><var>K</var><sub>D</sub></td><td></td></tr>
-			<tr><td>PL</td><td class="center">&#x2002;&#x21CC;&#x2002;</td><td>P&#x2002;+&#x2002;L</td></tr>
-		</table>
-		<table class="reactiontable">
-			<tr><td></td><td class="center overreactionarrow"><var>K</var><sub>D</sub>&prime;</td><td></td></tr>
-			<tr><td>P&prime;L</td><td class="center">&#x2002;&#x21CC;&#x2002;</td><td>P&prime;&#x2002;+&#x2002;L</td></tr>
+			<tr><td>P&#x2002;+&#x2002;L&#x2002;&#x21CC;&#x2002;PL</td><td>(<var>K</var><sub>D</sub>)</td></tr>
+			<tr><td>P&prime;&#x2002;+&#x2002;L&#x2002;&#x21CC;&#x2002;P&prime;L</td><td>(<var>K</var><sub>D</sub>&prime;)</td></tr>
 		</table>
 		<table id="slidertable">
 			<tr>
@@ -68,21 +64,21 @@
 				<td class="valuecol2" colspan="3">=&nbsp;<input type="number" min="10" step="10" value="200" style="width:5.5em" id="mass1" oninput="update();" />&nbsp;g&nbsp;mol<sup>&minus;1</sup></td>
 			</tr>
 			<tr>
-				<td title="Complex 1 dissociation constant"><var>K</var><sub>D</sub>&nbsp;(PL)</td>
+				<td title="Complex 1 dissociation constant"><var>K</var><sub>D</sub></td>
 				<td class="valuecol">=&nbsp;<span id="value7"></span></td>
 				<td><input id="slider7" class="slider" type="range" value="90" min="0" max="240" oninput="slider_input(7);" /></td>
 				<td class="grey" title="Complex 1 association constant"><var>K</var><sub>A</sub></td>
 				<td class="valuecol2 grey">=&nbsp;<span id="value16"></span>,</td>
-				<td class="grey" title="Gibbs free energy of complex 1 dissociation (T = 25 &deg;C)">&Delta;<sub>D</sub><var>G</var></td>
+				<td class="grey" title="Gibbs free energy of complex 1 dissociation (T = 25 &deg;C)">&Delta;<var>G</var></td>
 				<td class="valuecol2 grey">=&nbsp;<span id="value8"></span></td>
 			</tr>
 			<tr>
-				<td title="Complex 2 dissociation constant"><var>K</var><sub>D</sub>&prime;&nbsp;(P&prime;L)</td>
+				<td title="Complex 2 dissociation constant"><var>K</var><sub>D</sub>&prime;</td>
 				<td class="valuecol">=&nbsp;<span id="value9"></span></td>
 				<td><input id="slider9" class="slider" type="range" value="180" min="0" max="240" oninput="slider_input(9);" /></td>
 				<td class="grey" title="Complex 2 association constant"><var>K</var><sub>A</sub>&prime;</td>
 				<td class="valuecol2 grey">=&nbsp;<span id="value18"></span>,</td>
-				<td class="grey" title="Gibbs free energy of complex 2 dissociation (T = 25 &deg;C)">&Delta;<sub>D</sub><var>G</var>&prime;</td>
+				<td class="grey" title="Gibbs free energy of complex 2 dissociation (T = 25 &deg;C)">&Delta;<var>G</var>&prime;</td>
 				<td class="valuecol2 grey">=&nbsp;<span id="value17"></span></td>
 			</tr>
 		</table>

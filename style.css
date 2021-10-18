@@ -113,7 +113,12 @@ td[title]
 .reactiontable tr td
 {
 	margin: 0;
-	padding: 0;
+	padding: 0.25ex 0;
+}
+
+.reactiontable td:last-child
+{
+	padding-left: 1em;
 }
 
 .center
