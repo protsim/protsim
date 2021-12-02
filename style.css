@@ -74,6 +74,17 @@ td[title]
 	cursor: help;
 }
 
+.valuespan
+{
+	cursor: pointer;
+}
+
+input[type=text]
+{
+	width: 8em;
+	display: none;
+}
+
 #figure_div
 {
 	margin-top: 3ex;

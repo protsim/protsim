@@ -175,6 +175,118 @@ function init()
 	update();
 }
 
+function valuespan_click(num)
+{
+	var value_ele = document.getElementById("value" + num);
+	var input_ele = document.getElementById("value_input" + num);
+	var t;
+	
+	switch(num)
+	{
+		case 3:
+		{
+			t = S_0.toExponential(2);
+			break;
+		}
+		case 5:
+		{
+			t = E_0.toExponential(2);
+			break;
+		}
+		case 7:
+		{
+			t = K_D.toExponential(2);
+			break;
+		}
+		case 9:
+		{
+			t = K_D2.toExponential(2);
+			break;
+		}
+		case 10:
+		{
+			t = Q_0.toExponential(2);
+			break;
+		}
+		default:
+		{
+			break;
+		}
+	}
+	
+	input_ele.value = t;
+	
+	if(t >= 1e-9 && t <= 1e-1)
+		input_ele.style.color = "black";
+	else if(t > 0)
+		input_ele.style.color = "darkgoldenrod";
+	else
+		input_ele.style.color = "red";
+	
+	value_ele.style.display = "none";
+	input_ele.style.display = "inline";
+	input_ele.focus();
+}
+
+function valueinput_update(num)
+{
+	var input_ele = document.getElementById("value_input" + num);
+	var t = Number(input_ele.value);
+	
+	if(t >= 1e-9 && t <= 1e-1)
+		input_ele.style.color = "black";
+	else if(t > 0)
+		input_ele.style.color = "darkgoldenrod";
+	else
+		input_ele.style.color = "red";
+	
+	if(t > 0) switch(num)
+	{
+		case 3:
+		{
+			S_0 = t;
+			break;
+		}
+		case 5:
+		{
+			E_0 = t;
+			break;
+		}
+		case 7:
+		{
+			K_D = t;
+			break;
+		}
+		case 9:
+		{
+			K_D2 = t;
+			break;
+		}
+		case 10:
+		{
+			Q_0 = t;
+			break;
+		}
+		default:
+		{
+			break;
+		}
+	}
+	
+	slider_input(num, false, true);
+}
+
+function valueinput_blur(num)
+{
+	var value_ele = document.getElementById("value" + num);
+	var input_ele = document.getElementById("value_input" + num);
+	
+	valueinput_update(num);
+	
+	value_ele.style.display = "inline";
+	input_ele.style.display = "none";
+}
+
 function render_text_svg(ele, str)
 {
 	var fontfamily = "";
@@ -346,7 +458,7 @@ function expval_wrap(v, index)
 	return expval(v, expparams[index][0], expparams[index][1], expparams[index][2]);
 }
 
-function slider_input(index, noupdate)
+function slider_input(index, noupdate, nocalculate)
 {
 	var slider = document.getElementById("slider" + index);
 	var label = document.getElementById("value" + index);
@@ -360,19 +472,22 @@ function slider_input(index, noupdate)
 	{
 		case 3: // [S]_0
 		{
-			val = S_0 = expval_wrap(rawval, index);
+			if(!nocalculate) S_0 = expval_wrap(rawval, index);
+			val = S_0;
 			unitstr = "mol\xA0l<sup>\u22121</sup>";
 			break;
 		}
 		case 5: // [E]
 		{
-			val = E_0 = expval_wrap(rawval, index);
+			if(!nocalculate) E_0 = expval_wrap(rawval, index);
+			val = E_0;
 			unitstr = "mol\xA0l<sup>\u22121</sup>";
 			break;
 		}
 		case 7: // K_D
 		{
-			val = K_D = expval_wrap(rawval, index);
+			if(!nocalculate) K_D = expval_wrap(rawval, index);
+			val = K_D;
 			unitstr = "mol\xA0l<sup>\u22121</sup>";
 			break;
 		}
@@ -384,13 +499,15 @@ function slider_input(index, noupdate)
 		}
 		case 9: // K_D 2
 		{
-			val = K_D2 = expval_wrap(rawval, index);
+			if(!nocalculate) K_D2 = expval_wrap(rawval, index);
+			val = K_D2;
 			unitstr = "mol\xA0l<sup>\u22121</sup>";
 			break;
 		}
 		case 10: // [E]
 		{
-			val = Q_0 = expval_wrap(rawval, index);
+			if(!nocalculate) Q_0 = expval_wrap(rawval, index);
+			val = Q_0;
 			unitstr = "mol\xA0l<sup>\u22121</sup>";
 			break;
 		}
@@ -462,29 +579,10 @@ function radio_input(index, noupdate)
 		{
 			xscale_alternative = 0;
 			
-			if(appmode === appmode_ligand)
-			{
-				//document.getElementById("title3").title = "Total ligand concentration";
-				//document.getElementById("label3_init").style.display = "inline-block";
-				//document.getElementById("label3_free").style.display = "none";
-			}
-			else if(appmode === appmode_homodimer)
-			{
-				//document.getElementById("title5").title = "Total protein concentration";
-				//document.getElementById("label5_init").style.display = "inline-block";
-				//document.getElementById("label5_free").style.display = "none";
-			}
-			else if(appmode === appmode_ligands)
+			if(appmode === appmode_ligands)
 			{
 				document.getElementById("fixval5").disabled = true;
 				document.getElementById("fixval10").disabled = false;
-			}
-			
-			if(appmode === appmode_receptors)
-			{
-				//document.getElementById("title5").title = "Total ligand concentration";
-				//document.getElementById("label5_init").style.display = "inline-block";
-				//document.getElementById("label5_free").style.display = "none";
 			}
 			
 			break;
@@ -493,29 +591,10 @@ function radio_input(index, noupdate)
 		{
 			xscale_alternative = 1;
 			
-			if(appmode === appmode_ligand)
-			{
-				//document.getElementById("title3").title = "Free ligand concentration";
-				//document.getElementById("label3_init").style.display = "none";
-				//document.getElementById("label3_free").style.display = "inline-block";
-			}
-			else if(appmode === appmode_homodimer)
-			{
-				//document.getElementById("title5").title = "Free protein concentration";
-				//document.getElementById("label5_init").style.display = "none";
-				//document.getElementById("label5_free").style.display = "inline-block";
-			}
-			else if(appmode === appmode_ligands)
+			if(appmode === appmode_ligands)
 			{
 				document.getElementById("fixval5").disabled = false;
 				document.getElementById("fixval10").disabled = true;
-			}
-			
-			if(appmode === appmode_receptors)
-			{
-				//document.getElementById("title5").title = "Free ligand concentration";
-				//document.getElementById("label5_init").style.display = "none";
-				//document.getElementById("label5_free").style.display = "inline-block";
 			}
 			
 			break;
