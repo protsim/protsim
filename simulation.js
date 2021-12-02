@@ -464,15 +464,15 @@ function radio_input(index, noupdate)
 			
 			if(appmode === appmode_ligand)
 			{
-				document.getElementById("title3").title = "Total ligand concentration";
-				document.getElementById("label3_init").style.display = "inline-block";
-				document.getElementById("label3_free").style.display = "none";
+				//document.getElementById("title3").title = "Total ligand concentration";
+				//document.getElementById("label3_init").style.display = "inline-block";
+				//document.getElementById("label3_free").style.display = "none";
 			}
 			else if(appmode === appmode_homodimer)
 			{
-				document.getElementById("title5").title = "Total protein concentration";
-				document.getElementById("label5_init").style.display = "inline-block";
-				document.getElementById("label5_free").style.display = "none";
+				//document.getElementById("title5").title = "Total protein concentration";
+				//document.getElementById("label5_init").style.display = "inline-block";
+				//document.getElementById("label5_free").style.display = "none";
 			}
 			else if(appmode === appmode_ligands)
 			{
@@ -482,9 +482,9 @@ function radio_input(index, noupdate)
 			
 			if(appmode === appmode_receptors)
 			{
-				document.getElementById("title5").title = "Total ligand concentration";
-				document.getElementById("label5_init").style.display = "inline-block";
-				document.getElementById("label5_free").style.display = "none";
+				//document.getElementById("title5").title = "Total ligand concentration";
+				//document.getElementById("label5_init").style.display = "inline-block";
+				//document.getElementById("label5_free").style.display = "none";
 			}
 			
 			break;
@@ -495,15 +495,15 @@ function radio_input(index, noupdate)
 			
 			if(appmode === appmode_ligand)
 			{
-				document.getElementById("title3").title = "Free ligand concentration";
-				document.getElementById("label3_init").style.display = "none";
-				document.getElementById("label3_free").style.display = "inline-block";
+				//document.getElementById("title3").title = "Free ligand concentration";
+				//document.getElementById("label3_init").style.display = "none";
+				//document.getElementById("label3_free").style.display = "inline-block";
 			}
 			else if(appmode === appmode_homodimer)
 			{
-				document.getElementById("title5").title = "Free protein concentration";
-				document.getElementById("label5_init").style.display = "none";
-				document.getElementById("label5_free").style.display = "inline-block";
+				//document.getElementById("title5").title = "Free protein concentration";
+				//document.getElementById("label5_init").style.display = "none";
+				//document.getElementById("label5_free").style.display = "inline-block";
 			}
 			else if(appmode === appmode_ligands)
 			{
@@ -513,9 +513,9 @@ function radio_input(index, noupdate)
 			
 			if(appmode === appmode_receptors)
 			{
-				document.getElementById("title5").title = "Free ligand concentration";
-				document.getElementById("label5_init").style.display = "none";
-				document.getElementById("label5_free").style.display = "inline-block";
+				//document.getElementById("title5").title = "Free ligand concentration";
+				//document.getElementById("label5_init").style.display = "none";
+				//document.getElementById("label5_free").style.display = "inline-block";
 			}
 			
 			break;

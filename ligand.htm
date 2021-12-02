@@ -1,4 +1,8 @@
 <!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		
 <!--
 	PROTEIN THERMODYNAMICS SIMULATIONS: Ligand binding simulation
 	Copyright (C) 2021 Johan Pääkkönen, Juha Rouvinen, University of Eastern Finland
@@ -22,9 +26,7 @@
 	(1) the file LICENSE in this folder
 	(2) https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 -->
-<html lang="en">
-	<head>
-		<meta charset="UTF-8" />
+		
 		<title>Ligand binding simulation</title>
 		<link rel="stylesheet" type="text/css" href="style.css" />
 		<script src="simulation.js"></script>
@@ -49,7 +51,7 @@
 				<td class="valuecol2" colspan="3">=&nbsp;<input type="number" min="1000" step="1000" value="20000" style="width:5.5em" id="mass1" oninput="update();" />&nbsp;g&nbsp;mol<sup>&minus;1</sup></td>
 			</tr>
 			<tr>
-				<td title="Total ligand concentration" id="title3"><span id="label3_free" style="display:none">[L]</span><span id="label3_init"><var>c</var><sub>L</sub></span></td>
+				<td title="Total ligand concentration" id="title3"><span id="label3_init"><var>c</var><sub>L</sub></span></td>
 				<td class="valuecol">=&nbsp;<span id="value3"></span></td>
 				<td><input id="slider3" class="slider" type="range" value="120" min="0" max="240" oninput="slider_input(3);" /></td>
 				<td title="Ligand molar mass"><var>M</var><sub>L</sub></td>

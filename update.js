@@ -135,8 +135,6 @@ function update(recalculate)
 						y: (scale_absolute ? Math.log10(cd[1]) : (cd[1] / E_0))
 					});
 				}
-				
-				labels[2] = "\uEEE8[L]";
 			}
 			else // total ligand
 			{
@@ -159,8 +157,6 @@ function update(recalculate)
 						y: (scale_absolute ? Math.log10(cd[1]) : (cd[1] / E_0))
 					});
 				}
-				
-				labels[2] = "\uEEECc\uEEEAL";
 			}
 			
 			if(scale_absolute)
@@ -178,21 +174,36 @@ function update(recalculate)
 			
 			var complex;
 			
+			var datapoint = calculate_ligand_total(E_0, S_0, K_D);
+			cd = datapoint.d;
+			cm = datapoint.m;
+			
+			var m1 = Number(document.getElementById("mass1").value);
+			var m2 = Number(document.getElementById("mass2").value);
+			if(!(m1 > 0)) m1 = NaN;
+			if(!(m2 > 0)) m2 = NaN;
+			masses = [m1 + m2, m1];
+			
+			pie[0] = { value: (cd[0] / E_0), colour: colour1 };
+			pie[1] = { value: (cd[1] / E_0), colour: colour2 };
+			
 			if(xscale_alternative)
 			{
 				xmin = 0;
 				xmax = 20 * K_D;
 				xaxistype = axistype_lin;
 				
-				if(S_0 <= 1.0001 * xmax)
+				if(cd[2] <= 1.0001 * xmax)
 				{
-					curves[2][0] = {x: S_0, y: ymin};
-					curves[2][1] = {x: S_0, y: ymax + 6 * (ymax - ymin) / ca_height};
+					curves[2][0] = {x: cd[2], y: ymin};
+					curves[2][1] = {x: cd[2], y: ymax + 6 * (ymax - ymin) / ca_height};
 				}
 				else
 				{
 					curves[2] = undefined;
 				}
+				
+				labels[2] = "\uEEE8[L]";
 				
 				if(E_0 <= 1.0001 * xmax)
 				{
@@ -213,19 +224,6 @@ function update(recalculate)
 				{
 					curves[4] = undefined;
 				}
-				
-				var datapoint = calculate_ligand_free(E_0, S_0, K_D);
-				cd = datapoint.d;
-				cm = datapoint.m;
-				
-				var m1 = Number(document.getElementById("mass1").value);
-				var m2 = Number(document.getElementById("mass2").value);
-				if(!(m1 > 0)) m1 = NaN;
-				if(!(m2 > 0)) m2 = NaN;
-				masses = [m1 + m2, m1];
-				
-				pie[0] = { value: (cd[0] / E_0), colour: colour1 };
-				pie[1] = { value: (cd[1] / E_0), colour: colour2 };
 			}
 			else
 			{
@@ -235,6 +233,8 @@ function update(recalculate)
 				
 				curves[2][0] = {x: Math.log10(S_0), y: ymin};
 				curves[2][1] = {x: Math.log10(S_0), y: ymax + 6 * (ymax - ymin) / ca_height};
+				
+				labels[2] = "\uEEECc\uEEEAL";
 				
 				curves[3][0] = {x: Math.log10(E_0), y: ymin};
 				curves[3][1] = {x: Math.log10(E_0), y: ymax + 6 * (ymax - ymin) / ca_height};
@@ -248,19 +248,6 @@ function update(recalculate)
 				{
 					curves[4] = undefined;
 				}
-				
-				var datapoint = calculate_ligand_total(E_0, S_0, K_D);
-				cd = datapoint.d;
-				cm = datapoint.m;
-				
-				var m1 = Number(document.getElementById("mass1").value);
-				var m2 = Number(document.getElementById("mass2").value);
-				if(!(m1 > 0)) m1 = NaN;
-				if(!(m2 > 0)) m2 = NaN;
-				masses = [m1 + m2, m1];
-				
-				pie[0] = { value: (cd[0] / E_0), colour: colour1 };
-				pie[1] = { value: (cd[1] / E_0), colour: colour2 };
 			}
 			
 			break;
@@ -340,16 +327,27 @@ function update(recalculate)
 				yaxistype = axistype_lin;
 			}
 			
+			var datapoint = calculate_homodimer(E_0, K_D);
+			cd = datapoint.d;
+			cm = datapoint.m;
+			
+			var m1 = Number(document.getElementById("mass1").value);
+			if(!(m1 > 0)) m1 = NaN;
+			masses = [m1 * 2, m1];
+			
+			pie[0] = {value: 2 * cd[0] / E_0, colour: colour1};
+			pie[1] = {value: cd[1] / E_0, colour: colour2};
+			
 			if(xscale_alternative)
 			{
 				xmin = 0;
 				xmax = 10 * K_D;
 				xaxistype = axistype_lin;
 				
-				if(E_0 <= 1.0001 * xmax)
+				if(cd[1] <= 1.0001 * xmax)
 				{
-					curves[2][0] = {x: E_0, y: ymin};
-					curves[2][1] = {x: E_0, y: ymax + 6 * (ymax - ymin) / ca_height};
+					curves[2][0] = {x: cd[1], y: ymin};
+					curves[2][1] = {x: cd[1], y: ymax + 6 * (ymax - ymin) / ca_height};
 				}
 				else
 				{
@@ -365,17 +363,6 @@ function update(recalculate)
 				{
 					curves[3] = undefined;
 				}
-				
-				var datapoint = calculate_homodimer_free(E_0, K_D);
-				cd = datapoint.d;
-				cm = datapoint.m;
-				
-				var m1 = Number(document.getElementById("mass1").value);
-				if(!(m1 > 0)) m1 = NaN;
-				masses = [m1 * 2, m1];
-				
-				pie[0] = { value: 2 * cd[0] / (2 * cd[0] + cd[1]), colour: colour1 };
-				pie[1] = { value: cd[1] / (2 * cd[0] + cd[1]), colour: colour2 };
 			}
 			else
 			{
@@ -395,17 +382,6 @@ function update(recalculate)
 				{
 					curves[3] = undefined;
 				}
-				
-				var datapoint = calculate_homodimer(E_0, K_D);
-				cd = datapoint.d;
-				cm = datapoint.m;
-				
-				var m1 = Number(document.getElementById("mass1").value);
-				if(!(m1 > 0)) m1 = NaN;
-				masses = [m1 * 2, m1];
-				
-				pie[0] = {value: 2 * cd[0] / E_0, colour: colour1};
-				pie[1] = {value: cd[1] / E_0, colour: colour2};
 			}
 			
 			break;
@@ -681,16 +657,6 @@ function update(recalculate)
 					curves[4] = undefined;
 				}
 				
-				if(E_0 <= 1.0001 * xmax)
-				{
-					curves[5][0] = {x: E_0, y: ymin};
-					curves[5][1] = {x: E_0, y: ymax + 6 * (ymax - ymin) / ca_height};
-				}
-				else
-				{
-					curves[5] = undefined;
-				}
-				
 				if(K_D <= 1.0001 * xmax)
 				{
 					curves[6][0] = {x: K_D, y: ymin};
@@ -789,9 +755,6 @@ function update(recalculate)
 				curves[4][0] = {x: Math.log10(Q_0), y: ymin};
 				curves[4][1] = {x: Math.log10(Q_0), y: ymax + 6 * (ymax - ymin) / ca_height};
 				
-				curves[5][0] = {x: Math.log10(E_0), y: ymin};
-				curves[5][1] = {x: Math.log10(E_0), y: ymax + 6 * (ymax - ymin) / ca_height};
-				
 				if(Math.log10(K_D) >= xmin)
 				{
 					curves[6][0] = {x: Math.log10(K_D), y: ymin};
@@ -825,10 +788,7 @@ function update(recalculate)
 			
 			var datapoint;
 			
-			if(xscale_alternative)
-				datapoint = calculate_ligands_free(E_0, Q_0, S_0, K_D, K_D2);
-			else
-				datapoint = calculate_ligands(E_0, Q_0, S_0, K_D, K_D2);
+			datapoint = calculate_ligands(E_0, Q_0, S_0, K_D, K_D2);
 			
 			cd = datapoint.d;
 			cm = datapoint.m;
@@ -845,6 +805,24 @@ function update(recalculate)
 			if(!(m2 > 0)) m2 = NaN;
 			if(!(m3 > 0)) m3 = NaN;
 			masses = [m1 + m2, m1 + m3, m2, m3];
+			
+			if(xscale_alternative)
+			{
+				if(cd[4] <= 1.0001 * xmax)
+				{
+					curves[5][0] = {x: cd[4], y: ymin};
+					curves[5][1] = {x: cd[4], y: ymax + 6 * (ymax - ymin) / ca_height};
+				}
+				else
+				{
+					curves[5] = undefined;
+				}
+			}
+			else
+			{
+				curves[5][0] = {x: Math.log10(E_0), y: ymin};
+				curves[5][1] = {x: Math.log10(E_0), y: ymax + 6 * (ymax - ymin) / ca_height};
+			}
 			
 			break;
 		}
