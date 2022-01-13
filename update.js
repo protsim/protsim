@@ -993,7 +993,7 @@ function update(recalculate)
 		{
 			var alpha_s = cd[0] / cd[1];
 			
-			concstr = alpha_s.toExponential(2);
+			concstr = alpha_s.toExponential(value_digits);
 			epos = concstr.search("e");
 			
 			if(epos !== -1)
