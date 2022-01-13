@@ -1,7 +1,11 @@
 <!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		
 <!--
 	PROTEIN THERMODYNAMICS SIMULATIONS: Protein homodimerisation simulation
-	Copyright (C) 2021 Johan Pääkkönen, Juha Rouvinen, University of Eastern Finland
+	Copyright (C) 2021–2022 Johan Pääkkönen, Juha Rouvinen, University of Eastern Finland
 	
 	This program is free software; you can redistribute it and/or
 	modify it under the terms of the GNU General Public License
@@ -22,9 +26,7 @@
 	(1) the file LICENSE in this folder
 	(2) https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 -->
-<html lang="en">
-	<head>
-		<meta charset="UTF-8" />
+		
 		<title>Protein homodimerisation simulation</title>
 		<link rel="stylesheet" type="text/css" href="style.css" />
 		<script src="simulation.js"></script>
@@ -42,15 +44,17 @@
 		</table>
 		<table id="slidertable">
 			<tr>
-				<td title="Total protein concentration" id="title5"><span id="label5_init"><var>c</var><sub>P</sub></span></td>
-				<td class="valuecol">=&nbsp;<span id="value5"></span></td>
+				<td title="Total protein concentration" id="title5"><var>c</var><sub>P</sub></td>
+				<td class="valuecol">=&nbsp;<span id="value5" class="valuespan" ondblclick="valuespan_click(5);"></span><input type="text" id="value_input5"
+					onblur="valueinput_blur(5);" onkeydown="valueinput_blur(5, event.keyCode);" oninput="valueinput_update(5);" /></td>
 				<td><input id="slider5" class="slider" type="range" value="120" min="0" max="240" oninput="slider_input(5);" /></td>
 				<td title="Protein molar mass"><var>M</var><sub>P</sub></td>
 				<td class="valuecol2" colspan="3">=&nbsp;<input type="number" min="1000" step="1000" value="20000" style="width:5.5em" id="mass1" oninput="update();" />&nbsp;g&nbsp;mol<sup>&minus;1</sup></td>
 			</tr>
 			<tr>
 				<td title="Protein dimer dissociation constant"><var>K</var><sub>D</sub></td>
-				<td class="valuecol">=&nbsp;<span id="value7"></span></td>
+				<td class="valuecol">=&nbsp;<span id="value7" class="valuespan" ondblclick="valuespan_click(7);"></span><input type="text" id="value_input7"
+					onblur="valueinput_blur(7);" onkeydown="valueinput_blur(7, event.keyCode);" oninput="valueinput_update(7);" /></td>
 				<td><input id="slider7" class="slider" type="range" value="90" min="0" max="240" oninput="slider_input(7);" /></td>
 				<td class="grey" title="Protein dimer association constant"><var>K</var><sub>A</sub></td>
 				<td class="valuecol2 grey">=&nbsp;<span id="value16"></span>,</td>
@@ -150,7 +154,7 @@
 		</div>
 		<div id="credits">
 			Johan P&auml;&auml;kk&ouml;nen, Juha Rouvinen<br />
-			University of Eastern Finland, 2021<br /><br />
+			University of Eastern Finland, 2021&ndash;2022<br /><br />
 			GitHub repository: <a href="https://github.com/protsim/protsim">github.com/protsim/protsim</a><!-- <br />
 			If you use this in your own research, please cite our article: <a href="">doi.org/XXX.XXX/XXX</a> -->
 		</div>

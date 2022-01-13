@@ -1,6 +1,6 @@
 /*
 	PROTEIN THERMODYNAMICS SIMULATIONS
-	Copyright (C) 2021 Johan Pääkkönen, Juha Rouvinen, University of Eastern Finland
+	Copyright (C) 2021–2022 Johan Pääkkönen, Juha Rouvinen, University of Eastern Finland
 	
 	This program is free software; you can redistribute it and/or
 	modify it under the terms of the GNU General Public License
@@ -24,6 +24,16 @@
 */
 
 "use strict";
+
+// This controls the scales of the slider values.
+// false: logarithmic scale, used in development versions and my PhD thesis
+// true: more humanly convenient scale, used in the final version
+var newdecadescale = true;
+
+// Set to true to display indicators of the pie segments.
+// I made it only for preparing figures for my PhD thesis,
+// so do not complain if it behaves weirdly.
+var extpiemode = false;
 
 var S_0 = 1;
 var E_0 = 1;
@@ -60,10 +70,7 @@ var appmode_receptors = 1;
 var appmode_ligand    = 2;
 var appmode_homodimer = 3;
 
-// Set to true to display indicators of the pie segments.
-// I made it only for preparing figures for my PhD thesis,
-// so do not complain if it behaves weirdly.
-var extpiemode = false;
+var value_digits = newdecadescale ? 1 : 2;
 
 var svg_xmlns = "http://www.w3.org/2000/svg";
 var xml_xmlns = "http://www.w3.org/XML/1998/namespace";
@@ -183,42 +190,19 @@ function valuespan_click(num)
 	
 	switch(num)
 	{
-		case 3:
-		{
-			t = S_0.toExponential(2);
-			break;
-		}
-		case 5:
-		{
-			t = E_0.toExponential(2);
-			break;
-		}
-		case 7:
-		{
-			t = K_D.toExponential(2);
-			break;
-		}
-		case 9:
-		{
-			t = K_D2.toExponential(2);
-			break;
-		}
-		case 10:
-		{
-			t = Q_0.toExponential(2);
-			break;
-		}
-		default:
-		{
-			break;
-		}
+		case 3: t = S_0; break;
+		case 5: t = E_0; break;
+		case 7: t = K_D; break;
+		case 9: t = K_D2; break;
+		case 10: t = Q_0; break;
+		default: break;
 	}
 	
-	input_ele.value = t;
+	input_ele.value = t.toExponential(value_digits);
 	
 	if(t >= 1e-9 && t <= 1e-1)
 		input_ele.style.color = "black";
-	else if(t > 0)
+	else if(t > 0 && Number.isFinite(t))
 		input_ele.style.color = "darkgoldenrod";
 	else
 		input_ele.style.color = "red";
@@ -235,56 +219,39 @@ function valueinput_update(num)
 	
 	if(t >= 1e-9 && t <= 1e-1)
 		input_ele.style.color = "black";
-	else if(t > 0)
+	else if(t > 0 && Number.isFinite(t))
 		input_ele.style.color = "darkgoldenrod";
 	else
 		input_ele.style.color = "red";
 	
-	if(t > 0) switch(num)
+	if(t > 0 && Number.isFinite(t)) switch(num)
 	{
-		case 3:
-		{
-			S_0 = t;
-			break;
-		}
-		case 5:
-		{
-			E_0 = t;
-			break;
-		}
-		case 7:
-		{
-			K_D = t;
-			break;
-		}
-		case 9:
-		{
-			K_D2 = t;
-			break;
-		}
-		case 10:
-		{
-			Q_0 = t;
-			break;
-		}
-		default:
-		{
-			break;
-		}
+		case 3: S_0 = t; break;
+		case 5: E_0 = t; break;
+		case 7: K_D = t; break;
+		case 9: K_D2 = t; break;
+		case 10: Q_0 = t; break;
+		default: break;
 	}
 	
 	slider_input(num, false, true);
 }
 
-function valueinput_blur(num)
+function valueinput_blur(num, keycode)
 {
-	var value_ele = document.getElementById("value" + num);
 	var input_ele = document.getElementById("value_input" + num);
+	if(input_ele.style.display === "none") return;
 	
-	valueinput_update(num);
-	
-	value_ele.style.display = "inline";
-	input_ele.style.display = "none";
+	if(keycode === undefined || keycode === 13 /* RETURN/ENTER */ || keycode === 27 /* ESC */)
+	{
+		var value_ele = document.getElementById("value" + num);
+		
+		valueinput_update(num);
+		
+		value_ele.style.display = "inline";
+		input_ele.style.display = "none";
+		input_ele.blur();
+	}
 }
 
 function render_text_svg(ele, str)
@@ -429,9 +396,18 @@ function replace_minus_signs(str)
 	return str.replace(/\u002D/g, "\u2212");
 }
 
+var decadetable = [
+	10, 11, 12, 13, 14, 15, 16, 17, 18, 20,
+	22, 24, 26, 28, 30, 32, 34, 36, 38, 40,
+	45, 50, 55, 60, 65, 70, 75, 80, 85, 90
+];
+
 function expval(v, e, minexp, maxexp)
 {
-	return Math.pow(e, minexp + v * (maxexp - minexp) / 240);
+	if(newdecadescale)
+		return decadetable[v % 30] * Math.pow(10, Math.floor(v / 30) - 10);
+	else
+		return Math.pow(e, minexp + v * (maxexp - minexp) / 240);
 }
 
 var expparams = [
@@ -537,11 +513,11 @@ function slider_input(index, noupdate, nocalculate)
 	
 	if(magnitude === 0 || index === 17 || index === 8)
 	{
-		valstr = sign + abs.toFixed(2);
+		valstr = sign + abs.toFixed(value_digits);
 	}
 	else
 	{
-		valstr = sign + (abs / Math.pow(10, magnitude)).toFixed(2) + "\xA0\u22C5\xA0" + "10<sup>" + magnitude + "</sup>";
+		valstr = sign + (abs / Math.pow(10, magnitude)).toFixed(value_digits) + "\xA0\u22C5\xA0" + "10<sup>" + magnitude + "</sup>";
 	}
 	
 	label.innerHTML = replace_minus_signs(valstr) + "\xA0" + unitstr;

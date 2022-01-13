@@ -1,6 +1,6 @@
 /*
 	PROTEIN THERMODYNAMICS SIMULATIONS
-	Copyright (C) 2021 Johan Pääkkönen, Juha Rouvinen, University of Eastern Finland
+	Copyright (C) 2021–2022 Johan Pääkkönen, Juha Rouvinen, University of Eastern Finland
 	
 	This program is free software; you can redistribute it and/or
 	modify it under the terms of the GNU General Public License
@@ -118,10 +118,6 @@ function update(recalculate)
 			{
 				for(h = 0; h <= 20; h += h < 1 ? 1/64 : 1/16)
 				{
-					// free s -> c
-					// p      -> E_0
-					// x      -> v (relative amount of complex)
-					
 					c = (h === 0 ? 1e-10 : h) * K_D;
 					cd = calculate_ligand_free(E_0, c, K_D).d;
 					
@@ -140,10 +136,6 @@ function update(recalculate)
 			{
 				for(h = -10; h <= 0; h += 1/32)
 				{
-					// s -> c
-					// p -> E_0
-					// x -> v (amount of complex)
-					
 					c = Math.pow(10, h);
 					cd = calculate_ligand_total(E_0, c, K_D).d;
 					
@@ -171,8 +163,6 @@ function update(recalculate)
 				ymax = 1;
 				yaxistype = axistype_lin;
 			}
-			
-			var complex;
 			
 			var datapoint = calculate_ligand_total(E_0, S_0, K_D);
 			cd = datapoint.d;
@@ -231,16 +221,30 @@ function update(recalculate)
 				xmax = 0;
 				xaxistype = axistype_log;
 				
-				curves[2][0] = {x: Math.log10(S_0), y: ymin};
-				curves[2][1] = {x: Math.log10(S_0), y: ymax + 6 * (ymax - ymin) / ca_height};
+				if(Math.log10(S_0) >= xmin && Math.log10(S_0) <= xmax)
+				{
+					curves[2][0] = {x: Math.log10(S_0), y: ymin};
+					curves[2][1] = {x: Math.log10(S_0), y: ymax + 6 * (ymax - ymin) / ca_height};
+				}
+				else
+				{
+					curves[2] = undefined;
+				}
 				
 				labels[2] = "\uEEECc\uEEEAL";
 				
-				curves[3][0] = {x: Math.log10(E_0), y: ymin};
-				curves[3][1] = {x: Math.log10(E_0), y: ymax + 6 * (ymax - ymin) / ca_height};
+				if(Math.log10(E_0) >= xmin && Math.log10(E_0) <= xmax)
+				{
+					curves[3][0] = {x: Math.log10(E_0), y: ymin};
+					curves[3][1] = {x: Math.log10(E_0), y: ymax + 6 * (ymax - ymin) / ca_height};
+				}
+				else
+				{
+					curves[3] = undefined;
+				}
 				
-				if(Math.log10(K_D) >= xmin)
-				{ 
+				if(Math.log10(K_D) >= xmin && Math.log10(K_D) <= xmax)
+				{
 					curves[4][0] = {x: Math.log10(K_D), y: ymin};
 					curves[4][1] = {x: Math.log10(K_D), y: ymax + 6 * (ymax - ymin) / ca_height};
 				}
@@ -370,10 +374,17 @@ function update(recalculate)
 				xmax = 0;
 				xaxistype = axistype_log;
 				
-				curves[2][0] = {x: Math.log10(E_0), y: ymin};
-				curves[2][1] = {x: Math.log10(E_0), y: ymax + 6 * (ymax - ymin) / ca_height};
+				if(Math.log10(E_0) >= xmin && Math.log10(E_0) <= xmax)
+				{ 
+					curves[2][0] = {x: Math.log10(E_0), y: ymin};
+					curves[2][1] = {x: Math.log10(E_0), y: ymax + 6 * (ymax - ymin) / ca_height};
+				}
+				else
+				{
+					curves[2] = undefined;
+				}
 				
-				if(Math.log10(K_D) >= xmin)
+				if(Math.log10(K_D) >= xmin && Math.log10(K_D) <= xmax)
 				{ 
 					curves[3][0] = {x: Math.log10(K_D), y: ymin};
 					curves[3][1] = {x: Math.log10(K_D), y: ymax + 6 * (ymax - ymin) / ca_height};
@@ -475,15 +486,31 @@ function update(recalculate)
 				yaxistype = axistype_lin;
 			}
 			
-			curves[4][0] = {x: Math.log10(Q_0), y: ymin};
-			curves[4][1] = {x: Math.log10(Q_0), y: ymax + 6 * (ymax - ymin) / ca_height};
+			if(Math.log10(Q_0) >= xmin && Math.log10(Q_0) <= xmax)
+			{
+				curves[4][0] = {x: Math.log10(Q_0), y: ymin};
+				curves[4][1] = {x: Math.log10(Q_0), y: ymax + 6 * (ymax - ymin) / ca_height};
+			}
+			else
+			{
+				curves[4] = undefined;
+			}
+			
 			labels[4] = "\uEEECc\uEEEAL";
 			
-			curves[5][0] = {x: Math.log10(E_0), y: ymin};
-			curves[5][1] = {x: Math.log10(E_0), y: ymax + 6 * (ymax - ymin) / ca_height};
+			if(Math.log10(E_0) >= xmin && Math.log10(E_0) <= xmax)
+			{
+				curves[5][0] = {x: Math.log10(E_0), y: ymin};
+				curves[5][1] = {x: Math.log10(E_0), y: ymax + 6 * (ymax - ymin) / ca_height};
+			}
+			else
+			{
+				curves[5] = undefined;
+			}
+			
 			labels[5] = "\uEEECc\uEEEAP";
 			
-			if(Math.log10(K_D) >= xmin)
+			if(Math.log10(K_D) >= xmin && Math.log10(K_D) <= xmax)
 			{
 				curves[6][0] = {x: Math.log10(K_D), y: ymin};
 				curves[6][1] = {x: Math.log10(K_D), y: ymax + 6 * (ymax - ymin) / ca_height};
@@ -493,7 +520,7 @@ function update(recalculate)
 				curves[6] = undefined;
 			}
 			
-			if(Math.log10(K_D2) >= xmin)
+			if(Math.log10(K_D2) >= xmin && Math.log10(K_D2) <= xmax)
 			{
 				curves[7][0] = {x: Math.log10(K_D2), y: ymin};
 				curves[7][1] = {x: Math.log10(K_D2), y: ymax + 6 * (ymax - ymin) / ca_height};
@@ -503,7 +530,7 @@ function update(recalculate)
 				curves[7] = undefined;
 			}
 			
-			if(Math.log10(S_0) >= xmin)
+			if(Math.log10(S_0) >= xmin && Math.log10(S_0) <= xmax)
 			{
 				curves[8][0] = {x: Math.log10(S_0), y: ymin};
 				curves[8][1] = {x: Math.log10(S_0), y: ymax + 6 * (ymax - ymin) / ca_height};
@@ -752,10 +779,17 @@ function update(recalculate)
 					yaxistype = axistype_lin;
 				}
 				
-				curves[4][0] = {x: Math.log10(Q_0), y: ymin};
-				curves[4][1] = {x: Math.log10(Q_0), y: ymax + 6 * (ymax - ymin) / ca_height};
+				if(Math.log10(Q_0) >= xmin && Math.log10(Q_0) <= xmax)
+				{
+					curves[4][0] = {x: Math.log10(Q_0), y: ymin};
+					curves[4][1] = {x: Math.log10(Q_0), y: ymax + 6 * (ymax - ymin) / ca_height};
+				}
+				else
+				{
+					curves[4] = undefined;
+				}
 				
-				if(Math.log10(K_D) >= xmin)
+				if(Math.log10(K_D) >= xmin && Math.log10(K_D) <= xmax)
 				{
 					curves[6][0] = {x: Math.log10(K_D), y: ymin};
 					curves[6][1] = {x: Math.log10(K_D), y: ymax + 6 * (ymax - ymin) / ca_height};
@@ -765,7 +799,7 @@ function update(recalculate)
 					curves[6] = undefined;
 				}
 				
-				if(Math.log10(K_D2) >= xmin)
+				if(Math.log10(K_D2) >= xmin && Math.log10(K_D2) <= xmax)
 				{
 					curves[7][0] = {x: Math.log10(K_D2), y: ymin};
 					curves[7][1] = {x: Math.log10(K_D2), y: ymax + 6 * (ymax - ymin) / ca_height};
@@ -775,7 +809,7 @@ function update(recalculate)
 					curves[7] = undefined;
 				}
 				
-				if(Math.log10(S_0) >= xmin)
+				if(Math.log10(S_0) >= xmin && Math.log10(S_0) <= xmax)
 				{
 					curves[8][0] = {x: Math.log10(S_0), y: ymin};
 					curves[8][1] = {x: Math.log10(S_0), y: ymax + 6 * (ymax - ymin) / ca_height};
@@ -820,8 +854,15 @@ function update(recalculate)
 			}
 			else
 			{
-				curves[5][0] = {x: Math.log10(E_0), y: ymin};
-				curves[5][1] = {x: Math.log10(E_0), y: ymax + 6 * (ymax - ymin) / ca_height};
+				if(Math.log10(E_0) >= xmin && Math.log10(E_0) <= xmax)
+				{
+					curves[5][0] = {x: Math.log10(E_0), y: ymin};
+					curves[5][1] = {x: Math.log10(E_0), y: ymax + 6 * (ymax - ymin) / ca_height};
+				}
+				else
+				{
+					curves[5] = undefined;
+				}
 			}
 			
 			break;
@@ -873,7 +914,7 @@ function update(recalculate)
 			var ele3 = document.getElementById("data" + i + "b");
 			var ele4 = document.getElementById("data" + i + "c");
 			
-			concstr = cd[i].toExponential(2);
+			concstr = cd[i].toExponential(value_digits);
 			epos = concstr.search("e");
 			
 			if(epos !== -1)
@@ -895,7 +936,7 @@ function update(recalculate)
 				ele2.innerHTML = concstr;
 			}
 			
-			concstr = (masses[i] * cd[i]).toExponential(2);
+			concstr = (masses[i] * cd[i]).toExponential(value_digits);
 			epos = concstr.search("e");
 			
 			if(!(masses[i] > 0))
