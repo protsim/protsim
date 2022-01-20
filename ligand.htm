@@ -44,7 +44,7 @@
 		</table>
 		<table id="slidertable">
 			<tr>
-				<td title="Protein concentration"><var>c</var><sub>P</sub></td>
+				<td title="Total protein concentration"><var>c</var><sub>P</sub></td>
 				<td class="valuecol">=&nbsp;<span id="value5" class="valuespan" ondblclick="valuespan_click(5);"></span><input type="text" id="value_input5"
 					onblur="valueinput_blur(5);" onkeydown="valueinput_blur(5, event.keyCode);" oninput="valueinput_update(5);" /></td>
 				<td><input id="slider5" class="slider" type="range" value="150" min="0" max="240" oninput="slider_input(5);" /></td>
@@ -119,8 +119,8 @@
 		<h2><a href="javascript:toggle_calcdiv();"><span id="toggle_calcdiv_symbol">&#x25BC;</span> Curve fitting</a></h2>
 		<div id="calcdiv" style="display:none;">
 			<input type="checkbox" id="toggle_calcdiv_checkbox" style="display:none" />
-			<p id="calcinfo">Give a list of pairs of values: <strong><var>x</var>-value&nbsp;<var>y</var>-value</strong>. The curve of your choice will be least-squares fitted<br />
-				to the data by finding the optimal slider position of the dissociation constant.<br />
+			<p id="calcinfo">Give a list of pairs of values: <strong><var>x</var>-value&nbsp;<var>y</var>-value</strong>. The curve of your choice will be least-squares<br />
+				fitted to the data by finding the optimal slider positions of the specified free parameters.<br />
 				The number of data points must be greater than or equal to the number of free parameters.<br />
 				Note that this is not a proper analytical tool. Results are imprecise and possibly inaccurate.</p>
 			<table id="calctable">

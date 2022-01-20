@@ -45,47 +45,47 @@
 		</table>
 		<table id="slidertable">
 			<tr>
-				<td title="Protein 1 concentration"><var>c</var><sub>P</sub></td>
+				<td title="Total protein P concentration"><var>c</var><sub>P</sub></td>
 				<td class="valuecol">=&nbsp;<span id="value10" class="valuespan" ondblclick="valuespan_click(10);"></span><input type="text" id="value_input10"
 					onblur="valueinput_blur(10);" onkeydown="valueinput_blur(10, event.keyCode);" oninput="valueinput_update(10);" /></td>
 				<td><input id="slider10" class="slider" type="range" value="135" min="0" max="240" oninput="slider_input(10);" /></td>
-				<td title="Protein 1 molar mass"><var>M</var><sub>P</sub></td>
+				<td title="Protein P molar mass"><var>M</var><sub>P</sub></td>
 				<td class="valuecol2" colspan="3">=&nbsp;<input type="number" min="1000" step="1000" value="20000" style="width:5.5em" id="mass2" oninput="update();" />&nbsp;g&nbsp;mol<sup>&minus;1</sup></td>
 			</tr>
 			<tr>
-				<td title="Protein 2 concentration"><var>c</var><sub>P&prime;</sub></td>
+				<td title="Total protein P&prime; concentration"><var>c</var><sub>P&prime;</sub></td>
 				<td class="valuecol">=&nbsp;<span id="value3" class="valuespan" ondblclick="valuespan_click(3);"></span><input type="text" id="value_input3"
 					onblur="valueinput_blur(3);" onkeydown="valueinput_blur(3, event.keyCode);" oninput="valueinput_update(3);" /></td>
 				<td><input id="slider3" class="slider" type="range" value="120" min="0" max="240" oninput="slider_input(3);" /></td>
-				<td title="Protein 2 molar mass"><var>M</var><sub>P&prime;</sub></td>
+				<td title="Protein P&prime; molar mass"><var>M</var><sub>P&prime;</sub></td>
 				<td class="valuecol2" colspan="3">=&nbsp;<input type="number" min="1000" step="1000" value="20000" style="width:5.5em" id="mass3" oninput="update();" />&nbsp;g&nbsp;mol<sup>&minus;1</sup></td>
 			</tr>
 			<tr>
-				<td title="Total ligand concentration" id="title5"><var>c</var><sub>L</sub></td>
+				<td title="Total ligand L concentration" id="title5"><var>c</var><sub>L</sub></td>
 				<td class="valuecol">=&nbsp;<span id="value5" class="valuespan" ondblclick="valuespan_click(5);"></span><input type="text" id="value_input5"
 					onblur="valueinput_blur(5);" onkeydown="valueinput_blur(5, event.keyCode);" oninput="valueinput_update(5);" /></td>
 				<td><input id="slider5" class="slider" type="range" value="150" min="0" max="240" oninput="slider_input(5);" /></td>
-				<td title="Ligand molar mass"><var>M</var><sub>L</sub></td>
+				<td title="Ligand L molar mass"><var>M</var><sub>L</sub></td>
 				<td class="valuecol2" colspan="3">=&nbsp;<input type="number" min="10" step="10" value="200" style="width:5.5em" id="mass1" oninput="update();" />&nbsp;g&nbsp;mol<sup>&minus;1</sup></td>
 			</tr>
 			<tr>
-				<td title="Complex 1 dissociation constant"><var>K</var><sub>D</sub></td>
+				<td title="Complex PL dissociation constant"><var>K</var><sub>D</sub></td>
 				<td class="valuecol">=&nbsp;<span id="value7" class="valuespan" ondblclick="valuespan_click(7);"></span><input type="text" id="value_input7"
 					onblur="valueinput_blur(7);" onkeydown="valueinput_blur(7, event.keyCode);" oninput="valueinput_update(7);" /></td>
 				<td><input id="slider7" class="slider" type="range" value="90" min="0" max="240" oninput="slider_input(7);" /></td>
-				<td class="grey" title="Complex 1 association constant"><var>K</var><sub>A</sub></td>
+				<td class="grey" title="Complex PL association constant"><var>K</var><sub>A</sub></td>
 				<td class="valuecol2 grey">=&nbsp;<span id="value16"></span>,</td>
-				<td class="grey" title="Gibbs free energy of complex 1 association (T = 25 &deg;C)">&Delta;<var>G</var></td>
+				<td class="grey" title="Gibbs free energy of complex PL association (T = 25 &deg;C)">&Delta;<var>G</var></td>
 				<td class="valuecol2 grey">=&nbsp;<span id="value8"></span></td>
 			</tr>
 			<tr>
-				<td title="Complex 2 dissociation constant"><var>K</var><sub>D</sub>&prime;</td>
+				<td title="Complex P&prime;L dissociation constant"><var>K</var><sub>D</sub>&prime;</td>
 				<td class="valuecol">=&nbsp;<span id="value9" class="valuespan" ondblclick="valuespan_click(9);"></span><input type="text" id="value_input9"
 					onblur="valueinput_blur(9);" onkeydown="valueinput_blur(9, event.keyCode);" oninput="valueinput_update(9);" /></td>
 				<td><input id="slider9" class="slider" type="range" value="180" min="0" max="240" oninput="slider_input(9);" /></td>
-				<td class="grey" title="Complex 2 association constant"><var>K</var><sub>A</sub>&prime;</td>
+				<td class="grey" title="Complex P&prime;L association constant"><var>K</var><sub>A</sub>&prime;</td>
 				<td class="valuecol2 grey">=&nbsp;<span id="value18"></span>,</td>
-				<td class="grey" title="Gibbs free energy of complex 2 association (T = 25 &deg;C)">&Delta;<var>G</var>&prime;</td>
+				<td class="grey" title="Gibbs free energy of complex P&prime;L association (T = 25 &deg;C)">&Delta;<var>G</var>&prime;</td>
 				<td class="valuecol2 grey">=&nbsp;<span id="value17"></span></td>
 			</tr>
 		</table>
@@ -93,7 +93,7 @@
 			<tr>
 				<td>Vertical scale:</td>
 				<td>
-					<label><input id="radio5" name="yaxis" class="radio" type="radio" onchange="radio_input(5);" checked />&nbsp;Absolute, logrithmic</label><br />
+					<label><input id="radio5" name="yaxis" class="radio" type="radio" onchange="radio_input(5);" checked />&nbsp;Absolute, logarithmic</label><br />
 					<label><input id="radio6" name="yaxis" class="radio" type="radio" onchange="radio_input(6);" />&nbsp;Absolute, linear</label><br />
 					<label><input id="radio7" name="yaxis" class="radio" type="radio" onchange="radio_input(7);" />&nbsp;Receptor P specificity</label>
 				</td>
@@ -101,8 +101,8 @@
 			<tr>
 				<td>Horizontal axis:</td>
 				<td>
-					<label><input id="radio3" name="xaxis" class="radio" type="radio" onchange="radio_input(3);" checked />&nbsp;Total ligand concentration</label><br />
-					<label><input id="radio4" name="xaxis" class="radio" type="radio" onchange="radio_input(4);" />&nbsp;Free ligand concentration</label>
+					<label><input id="radio3" name="xaxis" class="radio" type="radio" onchange="radio_input(3);" checked />&nbsp;Total ligand L concentration</label><br />
+					<label><input id="radio4" name="xaxis" class="radio" type="radio" onchange="radio_input(4);" />&nbsp;Free ligand L concentration</label>
 				</td>
 			</tr>
 		</table>
@@ -148,8 +148,8 @@
 		<h2><a href="javascript:toggle_calcdiv();"><span id="toggle_calcdiv_symbol">&#x25BC;</span> Curve fitting</a></h2>
 		<div id="calcdiv" style="display:none;">
 			<input type="checkbox" id="toggle_calcdiv_checkbox" style="display:none" />
-			<p id="calcinfo">Give a list of pairs of values: <strong><var>x</var>-value&nbsp;<var>y</var>-value</strong>. The curve of your choice will be least-squares fitted<br />
-				to the data by finding the optimal slider position of the dissociation constant.<br />
+			<p id="calcinfo">Give a list of pairs of values: <strong><var>x</var>-value&nbsp;<var>y</var>-value</strong>. The curve of your choice will be least-squares<br />
+				fitted to the data by finding the optimal slider positions of the specified free parameters.<br />
 				The number of data points must be greater than or equal to the number of free parameters.<br />
 				Note that this is not a proper analytical tool. Results are imprecise and possibly inaccurate.</p>
 			<table id="calctable">

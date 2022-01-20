@@ -35,8 +35,13 @@ body
 
 .valuecol
 {
-	width: 10em;
 	padding-left: 0.25em;
+	
+	/* if newdecadescale == false */
+	/* width: 10em; */
+	
+	/* if newdecadescale == true */
+	width: 9em;
 }
 
 .valuecol2

@@ -26,6 +26,7 @@
 "use strict";
 
 // This controls the scales of the slider values.
+// Adjust the selector .valuecol (lines 40–44) of style.css accordingly.
 // false: logarithmic scale, used in development versions and my PhD thesis
 // true: more humanly convenient scale, used in the final version
 var newdecadescale = true;
@@ -202,7 +203,7 @@ function valuespan_click(num)
 	
 	if(t >= 1e-9 && t <= 1e-1)
 		input_ele.style.color = "black";
-	else if(t > 0 && Number.isFinite(t))
+	else if(t >= 1e-300 && t <= 1e300)
 		input_ele.style.color = "darkgoldenrod";
 	else
 		input_ele.style.color = "red";
@@ -219,12 +220,12 @@ function valueinput_update(num)
 	
 	if(t >= 1e-9 && t <= 1e-1)
 		input_ele.style.color = "black";
-	else if(t > 0 && Number.isFinite(t))
+	else if(t >= 1e-300 && t <= 1e300)
 		input_ele.style.color = "darkgoldenrod";
 	else
 		input_ele.style.color = "red";
 	
-	if(t > 0 && Number.isFinite(t)) switch(num)
+	if(t >= 1e-300 && t <= 1e300) switch(num)
 	{
 		case 3: S_0 = t; break;
 		case 5: E_0 = t; break;
@@ -246,7 +247,7 @@ function valueinput_blur(num, keycode)
 	{
 		var value_ele = document.getElementById("value" + num);
 		
-		valueinput_update(num);
+		//valueinput_update(num);
 		
 		value_ele.style.display = "inline";
 		input_ele.style.display = "none";

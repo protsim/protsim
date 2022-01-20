@@ -389,8 +389,6 @@ function calculate_lsf()
 						};
 					}
 					
-					//console.log(theor);
-					
 					var srsum = sum_squared_residuals(datapoints, theor, false /* scale_absolute === 1 */);
 					
 					if(srsum < srsum_min)
@@ -398,8 +396,6 @@ function calculate_lsf()
 						srsum_min = srsum;
 						kp = k.slice();
 					}
-					
-					//console.log("" + k[0] + " " + srsum);
 					
 					for(i = 0; i < sliders.length; i++)
 					{
@@ -412,8 +408,6 @@ function calculate_lsf()
 					}
 				}
 			}
-			
-			//alert(""+srsum_min);
 			
 			var equal_to_initial = true;
 			
@@ -527,6 +521,9 @@ function solve_cubic_bisection(q1, q2, q3, q4, amin, amax)
 	{
 		var xmid = 0.5 * (xmin + xmax);
 		var ymid = val(xmid);
+		
+		// This prevents an eternal loop in some edge cases
+		if(xmid === xmin || xmid === xmax) return xmid;
 		
 		if(Math.abs(ymid) === 0)
 		{

@@ -183,7 +183,7 @@ function update(recalculate)
 				xmax = 20 * K_D;
 				xaxistype = axistype_lin;
 				
-				if(cd[2] <= 1.0001 * xmax)
+				if(cd[2] >= 0 && cd[2] <= 1.0001 * xmax)
 				{
 					curves[2][0] = {x: cd[2], y: ymin};
 					curves[2][1] = {x: cd[2], y: ymax + 6 * (ymax - ymin) / ca_height};
@@ -842,7 +842,7 @@ function update(recalculate)
 			
 			if(xscale_alternative)
 			{
-				if(cd[4] <= 1.0001 * xmax)
+				if(cd[4] >= 0 && cd[4] <= 1.0001 * xmax)
 				{
 					curves[5][0] = {x: cd[4], y: ymin};
 					curves[5][1] = {x: cd[4], y: ymax + 6 * (ymax - ymin) / ca_height};
@@ -921,19 +921,19 @@ function update(recalculate)
 			{
 				if(Number(concstr.substring(epos + 1)) === 0)
 				{
-					ele2.innerHTML = concstr.substring(0, epos);
+					ele2.innerHTML = replace_minus_signs(concstr.substring(0, epos));
 				}
 				else
 				{
-					ele2.innerHTML = concstr.substring(0, epos) +
+					ele2.innerHTML = replace_minus_signs(concstr.substring(0, epos) +
 						"\xA0\u22C5\xA010<sup>" +
-						replace_minus_signs(Number(concstr.substring(epos + 1)).toString()) +
-						"</sup>";
+						Number(concstr.substring(epos + 1)).toString() +
+						"</sup>");
 				}
 			}
 			else
 			{
-				ele2.innerHTML = concstr;
+				ele2.innerHTML = replace_minus_signs(concstr);
 			}
 			
 			concstr = (masses[i] * cd[i]).toExponential(value_digits);
@@ -947,22 +947,22 @@ function update(recalculate)
 			{
 				if(Number(concstr.substring(epos + 1)) === 0)
 				{
-					ele3.innerHTML = concstr.substring(0, epos);
+					ele3.innerHTML = replace_minus_signs(concstr.substring(0, epos));
 				}
 				else
 				{
-					ele3.innerHTML = concstr.substring(0, epos) +
+					ele3.innerHTML = replace_minus_signs(concstr.substring(0, epos) +
 						"\xA0\u22C5\xA010<sup>" +
-						replace_minus_signs(Number(concstr.substring(epos + 1)).toString()) +
-						"</sup>";
+						Number(concstr.substring(epos + 1)).toString() +
+						"</sup>");
 				}
 			}
 			else
 			{
-				ele3.innerHTML = concstr;
+				ele3.innerHTML = replace_minus_signs(concstr);
 			}
 			
-			ele4.innerHTML = (100 * cd[i] * cm[i] / csum).toFixed(1);
+			ele4.innerHTML = replace_minus_signs((100 * cd[i] * cm[i] / csum).toFixed(1));
 			
 			if(appmode === appmode_receptors)
 			{
@@ -981,7 +981,7 @@ function update(recalculate)
 				}
 				
 				ele4.innerHTML += " / <span style=\"color:" + colourstr + "\">" +
-					(100 * cd[i] * cm[i] / csum2).toFixed(1) + "</span>";
+					replace_minus_signs((100 * cd[i] * cm[i] / csum2).toFixed(1)) + "</span>";
 			}
 			
 			ele1.style.color = (i === 0 && scale_absolute === 2) ? colour1 : colours[i];
@@ -1000,19 +1000,19 @@ function update(recalculate)
 			{
 				if(Number(concstr.substring(epos + 1)) === 0)
 				{
-					specificity_label.innerHTML = concstr.substring(0, epos);
+					specificity_label.innerHTML = replace_minus_signs(concstr.substring(0, epos));
 				}
 				else
 				{
-					specificity_label.innerHTML = concstr.substring(0, epos) +
+					specificity_label.innerHTML = replace_minus_signs(concstr.substring(0, epos) +
 						"\xA0\u22C5\xA010<sup>" +
-						replace_minus_signs(Number(concstr.substring(epos + 1)).toString()) +
-						"</sup>";
+						Number(concstr.substring(epos + 1)).toString() +
+						"</sup>");
 				}
 			}
 			else
 			{
-				specificity_label.innerHTML = concstr;
+				specificity_label.innerHTML = replace_minus_signs(concstr);
 			}
 		}
 	}
@@ -1572,13 +1572,13 @@ function update(recalculate)
 		}
 		case appmode_ligands:
 		{
-			xlabelstr = (xscale_alternative ? "Ligand L" : "Protein") + " concentration (mol l\uEEE1\u22121\uEEE0)";
+			xlabelstr = (xscale_alternative ? "Total ligand L" : "Total protein P") + " concentration (mol l\uEEE1\u22121\uEEE0)";
 			ylabelstr = scale_absolute ? "Protein species concentration (mol l\uEEE1\u22121\uEEE0)" : "Relative protein species amount";
 			break;
 		}
 		case appmode_receptors:
 		{
-			xlabelstr = (xscale_alternative ? "Free" : "Total") + " ligand concentration (" + magnitude_string(xmagnitude) + "mol l\uEEE1\u22121\uEEE0)";
+			xlabelstr = (xscale_alternative ? "Free" : "Total") + " ligand L concentration (" + magnitude_string(xmagnitude) + "mol l\uEEE1\u22121\uEEE0)";
 			// ylabelstr = scale_absolute ? "Protein species concentration (mol l\uEEE1\u22121\uEEE0)" : "Protein species concentration (" + magnitude_string(ymagnitude) + "mol l\uEEE1\u22121\uEEE0)";
 			switch(scale_absolute)
 			{
