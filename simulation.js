@@ -203,7 +203,7 @@ function valuespan_click(num)
 	
 	if(t >= 1e-9 && t <= 1e-1)
 		input_ele.style.color = "black";
-	else if(t >= 1e-300 && t <= 1e300)
+	else if(t >= 1e-18 && t <= 1e3)
 		input_ele.style.color = "darkgoldenrod";
 	else
 		input_ele.style.color = "red";
@@ -220,12 +220,12 @@ function valueinput_update(num)
 	
 	if(t >= 1e-9 && t <= 1e-1)
 		input_ele.style.color = "black";
-	else if(t >= 1e-300 && t <= 1e300)
+	else if(t >= 1e-18 && t <= 1e3)
 		input_ele.style.color = "darkgoldenrod";
 	else
 		input_ele.style.color = "red";
 	
-	if(t >= 1e-300 && t <= 1e300) switch(num)
+	if(t >= 1e-18 && t <= 1e3) switch(num)
 	{
 		case 3: S_0 = t; break;
 		case 5: E_0 = t; break;
