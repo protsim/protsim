@@ -21,10 +21,15 @@
 	along with this program; if not, write to the Free Software
 	Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 -->
+
 <!--
 	The GNU General Public License, version 2, is available at:
 	(1) the file LICENSE in this folder
 	(2) https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+-->
+
+<!--
+	If you use this in your own research, please cite our paper: https://doi.org/10.1021/acsomega.2c00560
 -->
 		
 		<title>Competing ligands simulation</title>
@@ -37,166 +42,170 @@
 		</noscript>
 	</head>
 	<body onload="init();">
-		<p id="nojavascript">JavaScript must be enabled in your browser for the page to function.</p>
-		<h1>Competing ligands simulation</h1>
-		<table class="reactiontable">
-			<tr><td>P&#x2002;+&#x2002;L&#x2002;&#x21CC;&#x2002;PL</td><td>(<var>K</var><sub>D</sub>)</td></tr>
-			<tr><td>P&#x2002;+&#x2002;L&prime;&#x2002;&#x21CC;&#x2002;PL&prime;</td><td>(<var>K</var><sub>D</sub>&prime;)</td></tr>
-		</table>
-		<table id="slidertable">
-			<tr>
-				<td title="Total protein P concentration"><var>c</var><sub>P</sub></td>
-				<td class="valuecol">=&nbsp;<span id="value5" class="valuespan" ondblclick="valuespan_click(5);"></span><input type="text" id="value_input5"
-					onblur="valueinput_blur(5);" onkeydown="valueinput_blur(5, event.keyCode);" oninput="valueinput_update(5);" /></td>
-				<td><input id="slider5" class="slider" type="range" value="135" min="0" max="240" oninput="slider_input(5);"/></td>
-				<td title="Protein P molar mass"><var>M</var><sub>P</sub></td>
-				<td class="valuecol2" colspan="3">=&nbsp;<input type="number" min="1000" step="1000" value="20000" style="width:5.5em" id="mass1" oninput="update();" />&nbsp;g&nbsp;mol<sup>&minus;1</sup></td>
-			</tr>
-			<tr>
-				<td title="Total ligand L concentration"><var>c</var><sub>L</sub></td>
-				<td class="valuecol">=&nbsp;<span id="value10" class="valuespan" ondblclick="valuespan_click(10);"></span><input type="text" id="value_input10"
-					onblur="valueinput_blur(10);" onkeydown="valueinput_blur(10, event.keyCode);" oninput="valueinput_update(10);" /></td>
-				<td><input id="slider10" class="slider" type="range" value="120" min="0" max="240" oninput="slider_input(10);" /></td>
-				<td title="Ligand L molar mass"><var>M</var><sub>L</sub></td>
-				<td class="valuecol2" colspan="3">=&nbsp;<input type="number" min="10" step="10" value="200" style="width:5.5em" id="mass2" oninput="update();" />&nbsp;g&nbsp;mol<sup>&minus;1</sup></td>
-			</tr>
-			<tr>
-				<td title="Total ligand L&prime; concentration"><var>c</var><sub>L&prime;</sub></td>
-				<td class="valuecol">=&nbsp;<span id="value3" class="valuespan" ondblclick="valuespan_click(3);"></span><input type="text" id="value_input3"
-					onblur="valueinput_blur(3);" onkeydown="valueinput_blur(3, event.keyCode);" oninput="valueinput_update(3);" /></td>
-				<td><input id="slider3" class="slider" type="range" value="150" min="0" max="240" oninput="slider_input(3);" /></td>
-				<td title="Ligand L&prime; molar mass"><var>M</var><sub>L&prime;</sub></td>
-				<td class="valuecol2" colspan="3">=&nbsp;<input type="number" min="10" step="10" value="200" style="width:5.5em" id="mass3" oninput="update();" />&nbsp;g&nbsp;mol<sup>&minus;1</sup></td>
-			</tr>
-			<tr>
-				<td title="Complex PL dissociation constant"><var>K</var><sub>D</sub></td>
-				<td class="valuecol">=&nbsp;<span id="value7" class="valuespan" ondblclick="valuespan_click(7);"></span><input type="text" id="value_input7"
-					onblur="valueinput_blur(7);" onkeydown="valueinput_blur(7, event.keyCode);" oninput="valueinput_update(7);" /></td>
-				<td><input id="slider7" class="slider" type="range" value="90" min="0" max="240" oninput="slider_input(7);" /></td>
-				<td class="grey" title="Complex PL association constant"><var>K</var><sub>A</sub></td>
-				<td class="valuecol2 grey">=&nbsp;<span id="value16"></span>,</td>
-				<td class="grey" title="Gibbs free energy of complex PL association (T = 25 &deg;C)">&Delta;<var>G</var></td>
-				<td class="valuecol2 grey">=&nbsp;<span id="value8"></span></td>
-			</tr>
-			<tr>
-				<td title="Complex PL&prime; dissociation constant"><var>K</var><sub>D</sub>&prime;</td>
-				<td class="valuecol">=&nbsp;<span id="value9" class="valuespan" ondblclick="valuespan_click(9);"></span><input type="text" id="value_input9"
-					onblur="valueinput_blur(9);" onkeydown="valueinput_blur(9, event.keyCode);" oninput="valueinput_update(9);" /></td>
-				<td><input id="slider9" class="slider" type="range" value="180" min="0" max="240" oninput="slider_input(9);" /></td>
-				<td class="grey" title="Complex PL&prime; association constant"><var>K</var><sub>A</sub>&prime;</td>
-				<td class="valuecol2 grey">=&nbsp;<span id="value18"></span>,</td>
-				<td class="grey" title="Gibbs free energy of complex PL&prime; association (T = 25 &deg;C)">&Delta;<var>G</var>&prime;</td>
-				<td class="valuecol2 grey">=&nbsp;<span id="value17"></span></td>
-			</tr>
-		</table>
-		<table>
-			<tr>
-				<td>Vertical scale:</td>
-				<td>
-					<label><input id="radio1" name="yaxis" class="radio" type="radio" onchange="radio_input(1);" checked />&nbsp;Absolute</label><br />
-					<label><input id="radio2" name="yaxis" class="radio" type="radio" onchange="radio_input(2);" />&nbsp;Relative</label>
-				</td>
-			</tr>
-			<tr>
-				<td>Horizontal axis:</td>
-				<td>
-					<label><input id="radio3" name="xaxis" class="radio" type="radio" onchange="radio_input(3);" />&nbsp;Total protein P concentration</label><br />
-					<label><input id="radio4" name="xaxis" class="radio" type="radio" onchange="radio_input(4);" checked />&nbsp;Total ligand L concentration</label>
-				</td>
-			</tr>
-		</table>
-		<div id="figure_div">
-			<svg xmlns="http://www.w3.org/2000/svg" id="figure_svg" width="96%" height="100%" viewBox="0 0 600 450" preserveAspectRatio="none" style="font-family: Arial, Helvetica, sans-serif; font-size: 12px">
-				<rect x="0" y="0" width="100%" height="100%" style="fill: white; stroke: none;" />
-				<g id="svg_curvegroup" style="fill: none; stroke-width: 3px; stroke-linejoin: round; stroke-linecap: butt;"></g>
-				<g id="svg_datapointgroup"></g>
-				<g id="svg_overlaygroup"></g>
-				<g id="svg_linegroup" style="fill: none; stroke: black; stroke-width: 3px;"></g>
-				<g id="svg_legendgroup"></g>
-				<g id="svg_piegroup"></g>
-				<g id="svg_scribblegroup"></g>
-			</svg>
-		</div>
-		<table id="datatable">
-			<tr>
-				<th>Species</th>
-				<th>Conc. (mol l<sup>&minus;1</sup>)</th>
-				<th>Conc. (g l<sup>&minus;1</sup>)</th>
-				<th>Proportion (%)</th>
-			</tr>
-			<tr>
-				<td id="data0l">PL</td>
-				<td id="data0a">0</td><td id="data0b">0</td><td id="data0c">0</td>
-			</tr>
-			<tr>
-				<td id="data1l">PL&prime;</td>
-				<td id="data1a">0</td><td id="data1b">0</td><td id="data1c">0</td>
-			</tr>
-			<tr>
-				<td id="data2l">P</td>
-				<td id="data2a">0</td><td id="data2b">0</td><td id="data2c">0</td>
-			</tr>
-		</table>
-		<input type="button" value="Export graphic (SVG)" id="export_button" />
-		<hr />
-		<h2><a href="javascript:toggle_calcdiv();"><span id="toggle_calcdiv_symbol">&#x25BC;</span> Curve fitting</a></h2>
-		<div id="calcdiv" style="display:none;">
-			<input type="checkbox" id="toggle_calcdiv_checkbox" style="display:none" />
-			<p id="calcinfo">Give a list of pairs of values: <strong><var>x</var>-value&nbsp;<var>y</var>-value</strong>. The curve of your choice will be least-squares<br />
-				fitted to the data by finding the optimal slider positions of the specified free parameters.<br />
-				The number of data points must be greater than or equal to the number of free parameters.<br />
-				Note that this is not a proper analytical tool. Results are imprecise and possibly inaccurate.</p>
-			<table id="calctable">
+		<main>
+			<p id="nojavascript">JavaScript must be enabled in your browser for the page to function.</p>
+			<h1>Competing ligands simulation</h1>
+			<table class="reactiontable">
+				<tr><td>P&#x2002;+&#x2002;L&#x2002;&#x21CC;&#x2002;PL</td><td>(<var>K</var><sub>D</sub>)</td></tr>
+				<tr><td>P&#x2002;+&#x2002;L&prime;&#x2002;&#x21CC;&#x2002;PL&prime;</td><td>(<var>K</var><sub>D</sub>&prime;)</td></tr>
+			</table>
+			<table id="slidertable">
 				<tr>
-					<td><textarea id="databox" cols="24" rows="16"></textarea></td>
+					<td title="Total protein P concentration"><var>c</var><sub>P</sub></td>
+					<td class="valuecol">=&nbsp;<span id="value5" class="valuespan" ondblclick="valuespan_click(5);"></span><input type="text" id="value_input5"
+						onblur="valueinput_blur(5);" onkeydown="valueinput_blur(5, event.keyCode);" oninput="valueinput_update(5);" /></td>
+					<td><input id="slider5" class="slider" type="range" value="135" min="0" max="240" oninput="slider_input(5);"/></td>
+					<td title="Protein P molar mass"><var>M</var><sub>P</sub></td>
+					<td class="valuecol2" colspan="3">=&nbsp;<input type="number" min="1000" step="1000" value="20000" style="width:5.5em" id="mass1" oninput="update();" />&nbsp;g&nbsp;mol<sup>&minus;1</sup></td>
+				</tr>
+				<tr>
+					<td title="Total ligand L concentration"><var>c</var><sub>L</sub></td>
+					<td class="valuecol">=&nbsp;<span id="value10" class="valuespan" ondblclick="valuespan_click(10);"></span><input type="text" id="value_input10"
+						onblur="valueinput_blur(10);" onkeydown="valueinput_blur(10, event.keyCode);" oninput="valueinput_update(10);" /></td>
+					<td><input id="slider10" class="slider" type="range" value="120" min="0" max="240" oninput="slider_input(10);" /></td>
+					<td title="Ligand L molar mass"><var>M</var><sub>L</sub></td>
+					<td class="valuecol2" colspan="3">=&nbsp;<input type="number" min="10" step="10" value="200" style="width:5.5em" id="mass2" oninput="update();" />&nbsp;g&nbsp;mol<sup>&minus;1</sup></td>
+				</tr>
+				<tr>
+					<td title="Total ligand L&prime; concentration"><var>c</var><sub>L&prime;</sub></td>
+					<td class="valuecol">=&nbsp;<span id="value3" class="valuespan" ondblclick="valuespan_click(3);"></span><input type="text" id="value_input3"
+						onblur="valueinput_blur(3);" onkeydown="valueinput_blur(3, event.keyCode);" oninput="valueinput_update(3);" /></td>
+					<td><input id="slider3" class="slider" type="range" value="150" min="0" max="240" oninput="slider_input(3);" /></td>
+					<td title="Ligand L&prime; molar mass"><var>M</var><sub>L&prime;</sub></td>
+					<td class="valuecol2" colspan="3">=&nbsp;<input type="number" min="10" step="10" value="200" style="width:5.5em" id="mass3" oninput="update();" />&nbsp;g&nbsp;mol<sup>&minus;1</sup></td>
+				</tr>
+				<tr>
+					<td title="Complex PL dissociation constant"><var>K</var><sub>D</sub></td>
+					<td class="valuecol">=&nbsp;<span id="value7" class="valuespan" ondblclick="valuespan_click(7);"></span><input type="text" id="value_input7"
+						onblur="valueinput_blur(7);" onkeydown="valueinput_blur(7, event.keyCode);" oninput="valueinput_update(7);" /></td>
+					<td><input id="slider7" class="slider" type="range" value="90" min="0" max="240" oninput="slider_input(7);" /></td>
+					<td class="grey" title="Complex PL association constant"><var>K</var><sub>A</sub></td>
+					<td class="valuecol2 grey">=&nbsp;<span id="value16"></span>,</td>
+					<td class="grey" title="Gibbs free energy of complex PL association (T = 25 &deg;C)">&Delta;<var>G</var></td>
+					<td class="valuecol2 grey">=&nbsp;<span id="value8"></span></td>
+				</tr>
+				<tr>
+					<td title="Complex PL&prime; dissociation constant"><var>K</var><sub>D</sub>&prime;</td>
+					<td class="valuecol">=&nbsp;<span id="value9" class="valuespan" ondblclick="valuespan_click(9);"></span><input type="text" id="value_input9"
+						onblur="valueinput_blur(9);" onkeydown="valueinput_blur(9, event.keyCode);" oninput="valueinput_update(9);" /></td>
+					<td><input id="slider9" class="slider" type="range" value="180" min="0" max="240" oninput="slider_input(9);" /></td>
+					<td class="grey" title="Complex PL&prime; association constant"><var>K</var><sub>A</sub>&prime;</td>
+					<td class="valuecol2 grey">=&nbsp;<span id="value18"></span>,</td>
+					<td class="grey" title="Gibbs free energy of complex PL&prime; association (T = 25 &deg;C)">&Delta;<var>G</var>&prime;</td>
+					<td class="valuecol2 grey">=&nbsp;<span id="value17"></span></td>
+				</tr>
+			</table>
+			<table>
+				<tr>
+					<td>Vertical scale:</td>
 					<td>
-						<table>
-							<tr>
-								<td colspan="2">Calculation method:<br />
-									<label><input type="radio" name="calcmode" id="calcmode1" checked />&nbsp;Two-pass search (fast)</label><br />
-									<label><input type="radio" name="calcmode" id="calcmode2"         />&nbsp;Single-pass search (slow)</label><br />
-									<label><input type="radio" name="calcmode" id="calcmode3"         />&nbsp;Iterative search (converges from the given values)</label>
-								</td>
-							</tr>
-							<tr>
-								<td>Curve to fit:<br />
-									<label><input type="radio" name="calcoption" id="calcoption0" checked />&nbsp;[PL]</label><br />
-									<label><input type="radio" name="calcoption" id="calcoption1"         />&nbsp;[PL&prime;]</label><br />
-									<label><input type="radio" name="calcoption" id="calcoption2"         />&nbsp;[P]</label>
-								</td>
-								<td>
-									Free parameters:<br />
-									<label><input id="fixval5"  class="fixval" type="checkbox"          /><span>&nbsp;<var>c</var><sub>P</sub></span></label><br />
-									<label><input id="fixval10" class="fixval" type="checkbox" disabled /><span>&nbsp;<var>c</var><sub>L</sub></span></label><br />
-									<label><input id="fixval3"  class="fixval" type="checkbox"          /><span>&nbsp;<var>c</var><sub>L&prime;</sub></span></label><br />
-									<label><input id="fixval7"  class="fixval" type="checkbox"          /><span>&nbsp;<var>K</var><sub>D</sub></span></label><br />
-									<label><input id="fixval9"  class="fixval" type="checkbox"          /><span>&nbsp;<var>K</var><sub>D</sub>&prime;</span></label>
-								</td>
-							</tr>
-						</table>
+						<label><input id="radio1" name="yaxis" class="radio" type="radio" onchange="radio_input(1);" checked />&nbsp;Absolute</label><br />
+						<label><input id="radio2" name="yaxis" class="radio" type="radio" onchange="radio_input(2);" />&nbsp;Relative</label>
+					</td>
+				</tr>
+				<tr>
+					<td>Horizontal axis:</td>
+					<td>
+						<label><input id="radio3" name="xaxis" class="radio" type="radio" onchange="radio_input(3);" />&nbsp;Total protein P concentration</label><br />
+						<label><input id="radio4" name="xaxis" class="radio" type="radio" onchange="radio_input(4);" checked />&nbsp;Total ligand L concentration</label>
 					</td>
 				</tr>
 			</table>
-			<input type="button" value="Calculate" id="calcbutton" />
-			<span id="calcstatus" style="margin-left:1em;color:green">Waiting for input.</span>
-		</div>
-		<hr />
-		<h2>Other pages</h2>
-		<div id="linkarea">
-			<!-- <a href="ligands.htm">Competing ligands simulation</a>
-			<br /><br /> -->
-			<a href="receptors.htm">Competing receptors simulation</a>
-			<br /><br />
-			<a href="ligand.htm">Ligand binding simulation</a>
-			<br /><br />
-			<a href="homodimer.htm">Protein homodimerisation simulation</a>
-		</div>
-		<div id="credits">
-			Johan P&auml;&auml;kk&ouml;nen, Juha Rouvinen<br />
-			University of Eastern Finland, 2021&ndash;2022<br /><br />
-			GitHub repository: <a href="https://github.com/protsim/protsim">github.com/protsim/protsim</a><!-- <br />
-			If you use this in your own research, please cite our article: <a href="">doi.org/XXX.XXX/XXX</a> -->
-		</div>
+			<div id="figure_div">
+				<svg xmlns="http://www.w3.org/2000/svg" id="figure_svg" width="96%" height="100%" viewBox="0 0 600 450" preserveAspectRatio="none" style="font-family: Arial, Helvetica, sans-serif; font-size: 12px">
+					<rect x="0" y="0" width="100%" height="100%" style="fill: white; stroke: none;" />
+					<g id="svg_curvegroup" style="fill: none; stroke-width: 3px; stroke-linejoin: round; stroke-linecap: butt;"></g>
+					<g id="svg_datapointgroup"></g>
+					<g id="svg_overlaygroup"></g>
+					<g id="svg_linegroup" style="fill: none; stroke: black; stroke-width: 3px;"></g>
+					<g id="svg_legendgroup"></g>
+					<g id="svg_piegroup"></g>
+					<g id="svg_scribblegroup"></g>
+				</svg>
+			</div>
+			<table id="datatable">
+				<tr>
+					<th>Species</th>
+					<th>Conc. (mol l<sup>&minus;1</sup>)</th>
+					<th>Conc. (g l<sup>&minus;1</sup>)</th>
+					<th>Proportion (%)</th>
+				</tr>
+				<tr>
+					<td id="data0l">PL</td>
+					<td id="data0a">0</td><td id="data0b">0</td><td id="data0c">0</td>
+				</tr>
+				<tr>
+					<td id="data1l">PL&prime;</td>
+					<td id="data1a">0</td><td id="data1b">0</td><td id="data1c">0</td>
+				</tr>
+				<tr>
+					<td id="data2l">P</td>
+					<td id="data2a">0</td><td id="data2b">0</td><td id="data2c">0</td>
+				</tr>
+			</table>
+			<input type="button" value="Export graphic (SVG)" id="export_button" />
+			<hr />
+			<h2><a href="javascript:toggle_calcdiv();"><span id="toggle_calcdiv_symbol">&#x25BC;</span> Curve fitting</a></h2>
+			<div id="calcdiv" style="display:none;">
+				<input type="checkbox" id="toggle_calcdiv_checkbox" style="display:none" />
+				<p id="calcinfo">Give a list of pairs of values: <strong><var>x</var>-value&nbsp;<var>y</var>-value</strong>. The curve of your choice will be least-squares<br />
+					fitted to the data by finding the optimal slider positions of the specified free parameters.<br />
+					The number of data points must be greater than or equal to the number of free parameters.<br />
+					Note that this is not a proper analytical tool. Results are imprecise and possibly inaccurate.</p>
+				<table id="calctable">
+					<tr>
+						<td><textarea id="databox" cols="24" rows="16"></textarea></td>
+						<td>
+							<table>
+								<tr>
+									<td colspan="2">Calculation method:<br />
+										<label><input type="radio" name="calcmode" id="calcmode1" checked />&nbsp;Two-pass search (fast)</label><br />
+										<label><input type="radio" name="calcmode" id="calcmode2"         />&nbsp;Single-pass search (slow)</label><br />
+										<label><input type="radio" name="calcmode" id="calcmode3"         />&nbsp;Iterative search (converges from the given values)</label>
+									</td>
+								</tr>
+								<tr>
+									<td>Curve to fit:<br />
+										<label><input type="radio" name="calcoption" id="calcoption0" checked />&nbsp;[PL]</label><br />
+										<label><input type="radio" name="calcoption" id="calcoption1"         />&nbsp;[PL&prime;]</label><br />
+										<label><input type="radio" name="calcoption" id="calcoption2"         />&nbsp;[P]</label>
+									</td>
+									<td>
+										Free parameters:<br />
+										<label><input id="fixval5"  class="fixval" type="checkbox"          /><span>&nbsp;<var>c</var><sub>P</sub></span></label><br />
+										<label><input id="fixval10" class="fixval" type="checkbox" disabled /><span>&nbsp;<var>c</var><sub>L</sub></span></label><br />
+										<label><input id="fixval3"  class="fixval" type="checkbox"          /><span>&nbsp;<var>c</var><sub>L&prime;</sub></span></label><br />
+										<label><input id="fixval7"  class="fixval" type="checkbox"          /><span>&nbsp;<var>K</var><sub>D</sub></span></label><br />
+										<label><input id="fixval9"  class="fixval" type="checkbox"          /><span>&nbsp;<var>K</var><sub>D</sub>&prime;</span></label>
+									</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+				</table>
+				<input type="button" value="Calculate" id="calcbutton" />
+				<span id="calcstatus" style="margin-left:1em;color:green">Waiting for input.</span>
+			</div>
+		</main>
+		<footer>
+			<hr />
+			<h2>Other pages</h2>
+			<nav id="linkarea">
+				<!-- <a href="ligands.htm">Competing ligands simulation</a>
+				<br /><br /> -->
+				<a href="receptors.htm">Competing receptors simulation</a>
+				<br /><br />
+				<a href="ligand.htm">Ligand binding simulation</a>
+				<br /><br />
+				<a href="homodimer.htm">Protein homodimerisation simulation</a>
+			</nav>
+			<div id="credits">
+				Johan P&auml;&auml;kk&ouml;nen, Juha Rouvinen<br />
+				University of Eastern Finland, 2021&ndash;2022<br /><br />
+				GitHub repository: <a href="https://github.com/protsim/protsim">github.com/protsim/protsim</a><br />
+				If you use this in your own research, please cite our paper: <a href="https://doi.org/10.1021/acsomega.2c00560">doi:10.1021/acsomega.2c00560</a>
+			</div>
+		</footer>
 		<script>preinit(appmode_ligands);</script>
 	</body>
 </html>

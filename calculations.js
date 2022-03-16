@@ -23,6 +23,8 @@
 	(2) https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 */
 
+// If you use this in your own research, please cite our paper: https://doi.org/10.1021/acsomega.2c00560
+
 "use strict";
 
 var datalabels = [];
@@ -492,6 +494,10 @@ function solve_cubic_newton(q1, q2, q3, q4, a0)
 		// (the search will probably not converge)
 		
 		if(++cycles >= 20) return NaN; // TODO: try to find ways to reduce this
+		
+		// BTW: nice videos on the chaotic behaviour of the Newton method:
+		// https://www.youtube.com/watch?v=-RdOwhmqP5s
+		// https://www.youtube.com/watch?v=LqbZpur38nw
 	}
 }
 

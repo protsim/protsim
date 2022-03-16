@@ -23,6 +23,8 @@
 	(2) https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 */
 
+// If you use this in your own research, please cite our paper: https://doi.org/10.1021/acsomega.2c00560
+
 "use strict";
 
 function update(recalculate)
@@ -869,32 +871,7 @@ function update(recalculate)
 		}
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	// #################################################################################################################
 	
 	if(cd !== undefined && cm !== undefined)
 	{
@@ -1037,17 +1014,6 @@ function update(recalculate)
 
 	if(pie.length > 0)
 	{
-		/*
-		 var cx = ca_left + c*a_width * 0.5;
-		 var cy = ca_top + ca_height * 0.5;
-		 var radius = Math.min(ca_width, ca_height) / 4;
-		 
-		 svg_rect.setAttribute("x", ca_left + ca_width + 7);
-		 svg_rect.setAttribute("y", ca_top + legends[t] * 45);
-		 svg_rect.setAttribute("width", cwidth - ca_left - ca_width - 14);
-		 svg_rect.setAttribute("height", 30);
-		 */
-		
 		var radius = (cwidth - ca_left - ca_width) * 0.5 - 2;
 		var cx = ca_left + ca_width + radius + 2;
 		var cy = ca_top + radius + 45 + 40 * legends.reduce(function(max, val) { return ((val > 0) && val > max) ? val : max; }, 0);
