@@ -27,7 +27,7 @@
 	If you use this in your own research, please cite our paper: https://doi.org/10.1021/acsomega.2c00560
 */
 
-body *
+main *
 {
 	display: none;
 }
